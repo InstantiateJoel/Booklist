@@ -18,12 +18,18 @@ public class Books {
     public static void userOptions() {
         System.out.println("============Booklist============");
         System.out.println();
-        System.out.println("Please choose from the following options:\n " +
-                "1: Add book\n " +
-                "2: Change Status\n " +
-                "3: Change book\n " +
-                "4: Filter\n " +
-                "5: Delete book");
+        System.out.println("""
+                Please choose from the following options:
+                 \
+                1: Add book
+                 \
+                2: Change Status
+                 \
+                3: Change book
+                 \
+                4: Filter
+                 \
+                5: Delete book""");
         /*
         todo:
         - validate the user input
