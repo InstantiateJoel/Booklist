@@ -9,33 +9,34 @@ import java.util.Scanner;
  */
 public class Books {
     // Scanner initialization
-    Scanner userInput = new Scanner(System.in);
+    public static Scanner userInput = new Scanner(System.in);
 
     // public var declarations
-    String userOption = ""; // either variable or array, to check if user input is in options
+    public static String userChoice; // either variable or array, to check if user input is in options
 
     // public SQL Queries
     public static void userOptions() {
         System.out.println("============Booklist============");
         System.out.println();
-        System.out.println("""
-                Please choose from the following options:
-                 \
-                1: Add book
-                 \
-                2: Change Status
-                 \
-                3: Change book
-                 \
-                4: Filter
-                 \
-                5: Delete book""");
-        /*
-        todo:
-        - validate the user input
-        - after the user input is one of the following:
-            switch case, to check which one and then go to the part, that executes it
-         */
+
+        while (true) {
+            System.out.print("""
+                    Please choose from the following options (use the numbers):
+                     \
+                    1: Add book
+                     \
+                    2: Change Status
+                     \
+                    3: Change book
+                     \
+                    4: Filter
+                     \
+                    5: Delete book
+                    \
+                     Enter number>""");
+            userChoice = userInput.nextLine();
+            // validate user input here and start with switch case and so on
+        }
     }
 
     public static void main(String[] args) {
