@@ -3,11 +3,9 @@ import java.util.Scanner;
 
 /*
  Todo:
- 1. Add the JDBC Driver to the project
- 2. Test everything again
- 3. Check, if the code can be more easy written and better to read
- 4. Start with the booklist class
- 5. Make sure for every new thing to branch away!!!
+ 1. Check, if the code can be more easy written and better to read
+ 2. Start with the booklist class
+ 3. Make sure for every new thing to branch away!!!
 
  Other:
  Check, how to make the GUI; Check how to access the db and where it has to run!
