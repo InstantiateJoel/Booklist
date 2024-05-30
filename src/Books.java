@@ -2,20 +2,26 @@ import java.sql.*;
 import java.util.Scanner;
 
 /*
- Ideas:
- - When user wants to filter for specific
+ todo:
+ 1. Password is not case sensitive anymore? -> hotfix!
+ 2. User can delete ALL books from EVERY user -> hotfix!
+    possible fix:
+    I need to check, if the two ID´s are matching
+ 3. If book is deleted, code still says "something went wrong", even if it is not in the db anymore
+ 4. When all above is done => Debug EVERYTHING
  */
+
 public class Books {
     // Scanner initialization
     public static Scanner userInput = new Scanner(System.in);
 
     // public var declarations
-    public static String userChoice; // either variable or array, to check if user input is in options
+    public static String userChoice; // used to check which case from switch should be used
     public static String bookName, authorName, bookGenre, bookStatus; // used to get the input and safe it for the DB
-    //public static String[] filterKeywords = {""};
 
     // public SQL Queries
     public static final String insertBooksQuery = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
+    public static final String deleteBookQuery = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -34,9 +40,9 @@ public class Books {
                  \
                 1: Add book
                  \
-                2: Change Status
+                2: Alter Status
                  \
-                3: Change book
+                3: Alter book
                  \
                 4: Filter
                  \
@@ -91,19 +97,32 @@ public class Books {
                     break;
                 }
                 break;
-            case "2": // Change status of a book
+            case "2":// Change status of a book
             case "3": // Change a column of a book
             case "4": // Filtering for specific words
-            case "5": // Delete a book
+            case "5": // delete a book
+                while (true) {
+                    System.out.println("Which book do you want to delete?> ");
+                    bookName = userInput.nextLine();
+
+                    System.out.println("What is the name of the author?> ");
+                    authorName = userInput.nextLine();
+
+                    if (bookName.isEmpty() || authorName.isEmpty()) {
+                        System.out.println("You need to enter both the name of the book and the author!");
+                    } else {
+                        deleteBook(booklistConnection, userId); // goes to the method, that deletes the book
+                        break;
+                    }
+                }
             default:
                 System.out.println("Unexpected error!");
         }
     }
 
-
+    // this method inserts a new book in the DB
     public static void insertIntoBooks(Connection booklistConnection, int userId) {
         try {
-            // prepares the statement to be executed and gives the variables to the statement, to insert in the DB
             PreparedStatement insertBooksStatement = booklistConnection.prepareStatement(insertBooksQuery);
             insertBooksStatement.setInt(1, userId);
             insertBooksStatement.setString(2, bookName);
@@ -119,11 +138,32 @@ public class Books {
             } else {
                 System.out.println("Something went wrong! Please try again or contact the admin!");
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
-
     }
+
+    // this method deletes a book from the DB
+    public static void deleteBook(Connection booklistConnection, int userId) {
+        try {
+            PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(deleteBookQuery);
+            deleteBookStatement.setInt(1, userId);
+            deleteBookStatement.setString(2, bookName);
+            deleteBookStatement.setString(3, authorName);
+            int rowsAffected = deleteBookStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Book was successfully deleted!");
+                userOptions(booklistConnection, userId);
+            } else {
+                System.out.println("There was an error. Please try again, or contact your admin!");
+                userOptions(booklistConnection, userId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
     public static void main(String[] args) {
         try {
             // connection to database
