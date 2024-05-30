@@ -43,10 +43,10 @@ public class Users {
                 } else {
                     PreparedStatement checkUsersExists = booklistConnection.prepareStatement(checkUserQuery);
                     checkUsersExists.setString(1, userName);
-
                     ResultSet resultCheckUser = checkUsersExists.executeQuery();
                     if (resultCheckUser.next()) {
-                        checkPasswordMatch(booklistConnection);
+                        int userId = resultCheckUser.getInt("USERID");
+                        checkPasswordMatch(booklistConnection, userId);
                         break;
 
                     } else if (!resultCheckUser.next()) {
@@ -63,7 +63,7 @@ public class Users {
      On here, it checks, if the password matches the username in the database. If it matches, the access is granted,
      if it does not match, the user is prompted, to try it again.
      */
-    public static void checkPasswordMatch(Connection booklistConnection) {
+    public static int checkPasswordMatch(Connection booklistConnection, int userId) {
         try {
             while (true) {
                 // register new user variable
@@ -86,6 +86,7 @@ public class Users {
                     if (resultPassWordMatch.next()) {
                         System.out.println();
                         System.out.println("Access granted!");
+                        Books.userOptions(booklistConnection, userId);
                         break;
 
                     } else if (!resultPassWordMatch.next()) {
@@ -97,6 +98,7 @@ public class Users {
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
+        return userId;
     }
 
     /*
