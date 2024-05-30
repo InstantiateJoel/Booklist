@@ -138,7 +138,7 @@ public class Users {
     public static void main(String[] args) {
         try {
             // connection to database
-            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/booklist", "root", "Tzz$dJG+YccV^HQs");
+            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
             // start of the whole program
             checkUserName(booklistConnection);
 
