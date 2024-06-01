@@ -1,15 +1,6 @@
 import java.sql.*;
 import java.util.Scanner;
 
-/*
- Todo:
- 1. Check, if the code can be more easy written and better to read
- 2. Start with the booklist class
- 3. Make sure for every new thing to branch away!!!
-
- Other:
- Check, how to make the GUI; Check how to access the db and where it has to run!
- */
 public class Users {
     // Initialize Scanner
     public static Scanner userInput = new Scanner(System.in);
@@ -19,7 +10,7 @@ public class Users {
 
     // strings to be used as the query for sql
     public static final String checkUserQuery = "SELECT * FROM USERS WHERE USERNAME = ? ";
-    public static final String checkUserPwdQuery = "SELECT * FROM USERS WHERE LOWER(USERNAME) = ? AND USERPASSWORD = ? ";
+    public static final String checkUserPwdQuery = "SELECT * FROM USERS WHERE LOWER(USERNAME) = ? AND BINARY USERPASSWORD = ? ";
     public static final String insertNewUserQuery = "INSERT INTO USERS (USERNAME, USERPASSWORD) VALUES (? , ?)";
 
     /*

@@ -3,11 +3,9 @@ import java.util.Scanner;
 
 /*
  todo:
- 1. Password is not case sensitive anymore? -> hotfix!
- 2. User can delete ALL books from EVERY user -> hotfix!
-    possible fix:
-    I need to check, if the two ID´s are matching
- 3. If book is deleted, code still says "something went wrong", even if it is not in the db anymore
+ 1. Password is not case sensitive anymore? -> hotfix! => added the "binary" keyword in the query
+ 2. User can delete ALL books from EVERY user -> hotfix! => works somehow now? I did not touch it lol
+ 3. If book is deleted, code still says "something went wrong", even if it is not in the db anymore => works as well (did not touch anything)
  4. When all above is done => Debug EVERYTHING
  */
 
