@@ -2,35 +2,46 @@ import java.sql.*;
 import java.util.Scanner;
 
 /*
+ Ideas:
+ - Check if the book already exists in the DB (when inserting a new book)
+ - When printing all the books, make it in a "table view" like the DB rows
+ - either make table wishlist (with wishlist class maybe then) or use the status wishlist
+
+ Code ideas:
+ when giving the status for the insert/ change etc. Maybe make an array? (1, read; 2, ordered...) so there´s no typo problem with inputs
+ */
+
+/*
  todo:
- 1. Password is not case sensitive anymore? -> hotfix! => added the "binary" keyword in the query
- 2. User can delete ALL books from EVERY user -> hotfix! => works somehow now? I did not touch it lol
- 3. If book is deleted, code still says "something went wrong", even if it is not in the db anymore => works as well (did not touch anything)
- 4. When all above is done => Debug EVERYTHING
+ 1. Order of the switch case (which option which number)
+ 2. Debug EVERYTHING
  */
 
 public class Books {
     // Scanner initialization
     public static Scanner userInput = new Scanner(System.in);
 
-    // public var declarations
+    // Variable declarations
     public static String userChoice; // used to check which case from switch should be used
     public static String bookName, authorName, bookGenre, bookStatus; // used to get the input and safe it for the DB
 
-    // public SQL Queries
+    // SQL Queries
     public static final String insertBooksQuery = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
     public static final String deleteBookQuery = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
      */
-
-    /*
-    todo:
-    review the code (print lines and the if statements, check if they can be made easier or some)
-     */
     public static void userOptions(Connection booklistConnection, int userId) {
         System.out.println("============Booklist============");
+        System.out.println();
+        System.out.println("These are your books:");
+        /*
+         todo:
+         see if you can print like a "table" with every book displayed like the sql rows
+         number 5 in print line (write that different)
+         change the switch case (add the new case)
+         */
         System.out.print("""
                 Please choose from the following options (use the numbers):
                  \
@@ -42,7 +53,9 @@ public class Books {
                  \
                 4: Filter
                  \
-                5: Delete book
+                5 : Select / show all books
+                \
+                6: Delete book
                 \
                  Enter number>""");
         while (true) {
@@ -89,15 +102,15 @@ public class Books {
                     }
                     System.out.println("Status: " + bookStatus);
 
-                    insertIntoBooks(booklistConnection, userId); // goes to the method that executes the sql queries
+                    insertIntoBooks(booklistConnection, userId); // goes to the method that executes the insert sql query
                     break;
                 }
                 break;
             case "2":// Change status of a book
             case "3": // Change a column of a book
-            case "4": // Filtering for specific words
+            case "4": // Filtering for specific books
             case "5": // delete a book
-               deleteBook(booklistConnection, userId);
+                deleteBook(booklistConnection, userId);
             default:
                 System.out.println("Unexpected error!");
         }
@@ -131,10 +144,10 @@ public class Books {
         try {
             while (true) {
                 System.out.print("Which book do you want to delete?> ");
-                bookName = userInput.nextLine();
+                bookName = userInput.nextLine().toLowerCase();
 
                 System.out.print("What is the name of the author?> ");
-                authorName = userInput.nextLine();
+                authorName = userInput.nextLine().toLowerCase();
 
                 if (bookName.isEmpty() || authorName.isEmpty()) {
                     System.out.println("You need to enter both the name of the book and the author!");
@@ -142,20 +155,20 @@ public class Books {
                     break;
                 }
             }
-                PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(deleteBookQuery);
-                deleteBookStatement.setInt(1, userId);
-                deleteBookStatement.setString(2, bookName);
-                deleteBookStatement.setString(3, authorName);
-                int rowsAffected = deleteBookStatement.executeUpdate();
+            PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(deleteBookQuery);
+            deleteBookStatement.setInt(1, userId);
+            deleteBookStatement.setString(2, bookName);
+            deleteBookStatement.setString(3, authorName);
+            int rowsAffected = deleteBookStatement.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    System.out.println("Book was successfully deleted!");
-                    System.out.println();
-                    userOptions(booklistConnection, userId);
-                } else {
-                    System.out.println("There was an error. Please try again, or contact your admin!");
-                    deleteBook(booklistConnection, userId);
-                }
+            if (rowsAffected > 0) {
+                System.out.println("Book was successfully deleted!");
+                System.out.println();
+                userOptions(booklistConnection, userId);
+            } else {
+                System.out.println("There was an error. Please try again or contact the administrator!");
+                userOptions(booklistConnection, userId);
+            }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
