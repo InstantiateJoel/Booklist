@@ -31,8 +31,6 @@ public class Books {
      */
     public static void userOptions(Connection booklistConnection, int userId) {
         System.out.println("============Booklist============");
-        System.out.println();
-
         System.out.print("""
                 Please choose from the following options (use the numbers):
                  \
@@ -99,20 +97,7 @@ public class Books {
             case "3": // Change a column of a book
             case "4": // Filtering for specific words
             case "5": // delete a book
-                while (true) {
-                    System.out.println("Which book do you want to delete?> ");
-                    bookName = userInput.nextLine();
-
-                    System.out.println("What is the name of the author?> ");
-                    authorName = userInput.nextLine();
-
-                    if (bookName.isEmpty() || authorName.isEmpty()) {
-                        System.out.println("You need to enter both the name of the book and the author!");
-                    } else {
-                        deleteBook(booklistConnection, userId); // goes to the method, that deletes the book
-                        break;
-                    }
-                }
+               deleteBook(booklistConnection, userId);
             default:
                 System.out.println("Unexpected error!");
         }
@@ -144,19 +129,33 @@ public class Books {
     // this method deletes a book from the DB
     public static void deleteBook(Connection booklistConnection, int userId) {
         try {
-            PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(deleteBookQuery);
-            deleteBookStatement.setInt(1, userId);
-            deleteBookStatement.setString(2, bookName);
-            deleteBookStatement.setString(3, authorName);
-            int rowsAffected = deleteBookStatement.executeUpdate();
+            while (true) {
+                System.out.print("Which book do you want to delete?> ");
+                bookName = userInput.nextLine();
 
-            if (rowsAffected > 0) {
-                System.out.println("Book was successfully deleted!");
-                userOptions(booklistConnection, userId);
-            } else {
-                System.out.println("There was an error. Please try again, or contact your admin!");
-                userOptions(booklistConnection, userId);
+                System.out.print("What is the name of the author?> ");
+                authorName = userInput.nextLine();
+
+                if (bookName.isEmpty() || authorName.isEmpty()) {
+                    System.out.println("You need to enter both the name of the book and the author!");
+                } else {
+                    break;
+                }
             }
+                PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(deleteBookQuery);
+                deleteBookStatement.setInt(1, userId);
+                deleteBookStatement.setString(2, bookName);
+                deleteBookStatement.setString(3, authorName);
+                int rowsAffected = deleteBookStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Book was successfully deleted!");
+                    System.out.println();
+                    userOptions(booklistConnection, userId);
+                } else {
+                    System.out.println("There was an error. Please try again, or contact your admin!");
+                    deleteBook(booklistConnection, userId);
+                }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }

@@ -77,6 +77,7 @@ public class Users {
                     if (resultPassWordMatch.next()) {
                         System.out.println();
                         System.out.println("Access granted!");
+                        System.out.println();
                         Books.userOptions(booklistConnection, userId);
                         break;
 
