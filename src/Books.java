@@ -13,8 +13,7 @@ import java.util.Scanner;
 
 /*
  todo:
- 1. Order of the switch case (which option which number)
- 2. Debug EVERYTHING
+ 1. Debug EVERYTHING
  */
 
 public class Books {
