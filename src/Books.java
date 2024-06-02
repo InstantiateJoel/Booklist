@@ -28,6 +28,7 @@ public class Books {
     // SQL Queries
     public static final String insertBooksQuery = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
     public static final String deleteBookQuery = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
+    // public static final String checkBookExistsQuery = "SELECT * FROM BOOKLIST WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -102,7 +103,7 @@ public class Books {
                     }
                     System.out.println("Status: " + bookStatus);
 
-                    insertIntoBooks(booklistConnection, userId); // goes to the method that executes the insert sql query
+                    insertIntoBooks(booklistConnection, userId);
                     break;
                 }
                 break;
