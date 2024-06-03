@@ -23,11 +23,13 @@ public class Books {
     // Variable declarations
     public static String userChoice; // used to check which case from switch should be used
     public static String bookName, authorName, bookGenre, bookStatus; // used to get the input and safe it for the DB
+    public static String selectedBookName, selectedAuthorName;
+    public static int selectedId;
 
     // SQL Queries
     public static final String insertBooksQuery = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
     public static final String deleteBookQuery = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
-    // public static final String checkBookExistsQuery = "SELECT * FROM BOOKLIST WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
+    public static final String checkBookExistsQuery = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -68,44 +70,7 @@ public class Books {
         }
         switch (userChoice) {
             case "1": // add book
-                while (true) {
-                    System.out.print("Enter the name of the book> ");
-                    bookName = userInput.nextLine();
-                    if (bookName.isEmpty()) {
-                        System.out.println("The name of the book is required!");
-                        continue;
-                    }
-                    System.out.print("Enter the name of the author> ");
-                    authorName = userInput.nextLine();
-                    if (authorName.isEmpty()) {
-                        System.out.println("The name of the author is required!");
-                        continue;
-                    }
-                    System.out.print("Enter the genre of the book. If you don´t want to add it, please proceed with 'enter'> ");
-                    bookGenre = userInput.nextLine();
-                    if (bookGenre.isEmpty()) {
-                        bookGenre = "Not defined";
-                    }
-
-                    System.out.print("Enter the name of the status (read, shelf, ordered, lend)> ");
-                    bookStatus = userInput.nextLine();
-                    if (bookStatus.isEmpty()) {
-                        System.out.println("The status of the book is required!");
-                        continue;
-                    }
-                    System.out.println("Name: " + bookName);
-                    System.out.println("Author: " + authorName);
-                    if (bookGenre.isEmpty()) {
-                        System.out.println("Genre not specified.");
-                    } else {
-                        System.out.println("Genre: " + bookGenre);
-                    }
-                    System.out.println("Status: " + bookStatus);
-
-                    insertIntoBooks(booklistConnection, userId);
-                    break;
-                }
-                break;
+                addBook(booklistConnection, userId);
             case "2":// Change status of a book
             case "3": // Change a column of a book
             case "4": // Filtering for specific books
@@ -116,9 +81,96 @@ public class Books {
         }
     }
 
+    // insert book, asks about the book
+    public static void addBook(Connection booklistConnection, int userId) {
+        while (true) {
+            System.out.print("Enter the name of the book> ");
+            bookName = userInput.nextLine();
+            if (bookName.isEmpty()) {
+                System.out.println("The name of the book is required!");
+                continue;
+            } else if (bookName.equals("options")) {
+                userOptions(booklistConnection, userId);
+                break;
+            }
+            System.out.print("Enter the name of the author> ");
+            authorName = userInput.nextLine();
+            if (authorName.isEmpty()) {
+                System.out.println("The name of the author is required!");
+                continue;
+            } else if (authorName.equals("options")) {
+                userOptions(booklistConnection, userId);
+                break;
+            }
+            System.out.print("Enter the genre of the book. If you don´t want to add it, please proceed with 'enter'> ");
+            bookGenre = userInput.nextLine();
+            if (bookGenre.isEmpty()) {
+                bookGenre = "Not defined";
+            } else if (bookGenre.equals("options")) {
+                userOptions(booklistConnection, userId);
+                break;
+            }
+
+            System.out.print("Enter the name of the status (read, shelf, ordered, lend)> ");
+            bookStatus = userInput.nextLine();
+            if (bookStatus.isEmpty()) {
+                System.out.println("The status of the book is required!");
+                continue;
+            } else if (bookStatus.equals("options")) {
+                userOptions(booklistConnection, userId);
+                break;
+            }
+            if (!checkBookExist(booklistConnection, userId)) {
+                insertIntoBooks(booklistConnection, userId);
+                break;
+            } else {
+                System.out.println("This book already exists. Please try again. If you want to use another option type 'options'.");
+                addBook(booklistConnection, userId);
+            }
+        }
+    }
+
+
+    // checks, if book already exists
+    public static boolean checkBookExist(Connection booklistConnection, int userId) {
+        try {
+                    PreparedStatement checkBookExistStatement = booklistConnection.prepareStatement(checkBookExistsQuery);
+                    checkBookExistStatement.setInt(1, userId);
+                    checkBookExistStatement.setString(2, bookName);
+                    checkBookExistStatement.setString(3, authorName);
+
+                    ResultSet checkBookExistResult = checkBookExistStatement.executeQuery();
+                    if (checkBookExistResult.next()) {
+                        selectedId = checkBookExistResult.getInt("USER_ID");
+                        selectedBookName = checkBookExistResult.getString("NAME");
+                        selectedAuthorName = checkBookExistResult.getString("AUTHOR");
+
+                        System.out.println("ID: " + selectedId);
+                        System.out.println("Name: " + selectedBookName);
+                        System.out.println("Author: " + selectedAuthorName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return true;
+    }
+
+
     // this method inserts a new book in the DB
     public static void insertIntoBooks(Connection booklistConnection, int userId) {
         try {
+            while (true) {
+                System.out.print("What is the genre of the book? If you don´t want to add it, just press 'enter'> ");
+                bookGenre = userInput.nextLine();
+
+                System.out.print("What is the Status of the book? (need to check with the todo on top)> ");
+                bookStatus = userInput.nextLine();
+                if (bookStatus.isEmpty()) {
+                    System.out.println("The status of the book is a required field!");
+                } else {
+                    break;
+                }
+            }
             PreparedStatement insertBooksStatement = booklistConnection.prepareStatement(insertBooksQuery);
             insertBooksStatement.setInt(1, userId);
             insertBooksStatement.setString(2, bookName);
