@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 /*
  Ideas:
- - Check if the book already exists in the DB (when inserting a new book)
  - When printing all the books, make it in a "table view" like the DB rows
  - either make table wishlist (with wishlist class maybe then) or use the status wishlist
 
