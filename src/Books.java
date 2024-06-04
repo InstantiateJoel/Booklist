@@ -49,10 +49,9 @@ public class Books {
                 selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
                 selectedGenre = selectAllBooksResult.getString("GENRE");
                 selectedStatus = selectAllBooksResult.getString("STATUS");
-
                 System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName  + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
-
             }
+            userOptions(booklistConnection, userId);
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
@@ -76,11 +75,11 @@ public class Books {
                  \
                 4: Filter
                  \
-                5 : Select / show all books
-                \
+                5: Select / show all books
+                 \
                 6: Delete book
-                \
-                 Enter number>""");
+                 \
+                Enter number>""");
         while (true) {
             userChoice = userInput.nextLine();
             if (userChoice.isEmpty()) {
