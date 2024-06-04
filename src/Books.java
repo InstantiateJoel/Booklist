@@ -43,8 +43,6 @@ public class Books {
 
             System.out.println("================BOOKLIST================");
             System.out.println("These are your books:");
-            System.out.println("Title: \t\t\t\t\t" + "Author: \t\t\t\t\t" + "Genre: \t\t\t\t\t" + "Status: ");
-
             while (selectAllBooksResult.next()) {
                 selectedId = selectAllBooksResult.getInt("USER_ID");
                 selectedBookName = selectAllBooksResult.getString("NAME");
@@ -52,7 +50,8 @@ public class Books {
                 selectedGenre = selectAllBooksResult.getString("GENRE");
                 selectedStatus = selectAllBooksResult.getString("STATUS");
 
-                System.out.println(selectedBookName + selectedAuthorName + selectedGenre + selectedStatus);
+                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName  + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
+
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
