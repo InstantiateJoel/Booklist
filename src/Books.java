@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 /*
  todo:
- 1. Debug EVERYTHING
+ 1. Make the print of the books more "beautiful"
  */
 
 public class Books {
