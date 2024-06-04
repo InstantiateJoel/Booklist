@@ -60,9 +60,10 @@ public class Books {
         public static void userOptions(Connection booklistConnection, int userId) {
         /*
          todo:
-         see if you can print like a "table" with every book displayed like the sql rows
+         1. see if you can print like a "table" with every book displayed like the sql rows
          number 5 in print line (write that different)
          change the switch case (add the new case)
+         2. Wishlist
          */
         System.out.print("""
                 Please choose from the following options (use the numbers):
