@@ -70,11 +70,16 @@ public class Books {
         switch (userChoice) {
             case "1": // add book
                 addBook(booklistConnection, userId);
+                break;
             case "2":// Change status of a book
+                break;
             case "3": // Change a column of a book
+                break;
             case "4": // Filtering for specific books
+                break;
             case "5": // delete a book
                 deleteBook(booklistConnection, userId);
+                break;
             default:
                 System.out.println("Unexpected error!");
         }
@@ -124,7 +129,6 @@ public class Books {
                 break;
             } else {
                 System.out.println("This book already exists. Please try again. If you want to use another option type 'options'.");
-                addBook(booklistConnection, userId);
             }
         }
     }
@@ -134,9 +138,9 @@ public class Books {
     public static boolean checkBookExist(Connection booklistConnection, int userId) {
         try {
                     PreparedStatement checkBookExistStatement = booklistConnection.prepareStatement(checkBookExistsQuery);
-                    checkBookExistStatement.setInt(1, userId);
-                    checkBookExistStatement.setString(2, bookName);
-                    checkBookExistStatement.setString(3, authorName);
+                    checkBookExistStatement.setString(1, bookName);
+                    checkBookExistStatement.setString(2, authorName);
+                    checkBookExistStatement.setInt(3, userId);
 
                     ResultSet checkBookExistResult = checkBookExistStatement.executeQuery();
                     if (checkBookExistResult.next()) {
@@ -144,32 +148,24 @@ public class Books {
                         selectedBookName = checkBookExistResult.getString("NAME");
                         selectedAuthorName = checkBookExistResult.getString("AUTHOR");
 
-                        System.out.println("ID: " + selectedId);
-                        System.out.println("Name: " + selectedBookName);
-                        System.out.println("Author: " + selectedAuthorName);
+                        //System.out.println("ID: " + selectedId);
+                        //System.out.println("Name: " + selectedBookName);
+                       // System.out.println("Author: " + selectedAuthorName);
+
+                        if (selectedBookName.equalsIgnoreCase(bookName) && selectedAuthorName.equalsIgnoreCase(authorName)) {
+                            return true;
+                        }
             }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
-        return true;
+        return false;
     }
 
 
     // this method inserts a new book in the DB
     public static void insertIntoBooks(Connection booklistConnection, int userId) {
         try {
-            while (true) {
-                System.out.print("What is the genre of the book? If you don´t want to add it, just press 'enter'> ");
-                bookGenre = userInput.nextLine();
-
-                System.out.print("What is the Status of the book? (need to check with the todo on top)> ");
-                bookStatus = userInput.nextLine();
-                if (bookStatus.isEmpty()) {
-                    System.out.println("The status of the book is a required field!");
-                } else {
-                    break;
-                }
-            }
             PreparedStatement insertBooksStatement = booklistConnection.prepareStatement(insertBooksQuery);
             insertBooksStatement.setInt(1, userId);
             insertBooksStatement.setString(2, bookName);
@@ -217,7 +213,7 @@ public class Books {
                 System.out.println();
                 userOptions(booklistConnection, userId);
             } else {
-                System.out.println("There was an error. Please try again or contact the administrator!");
+                System.out.println("Book is not in your Booklist.");
                 userOptions(booklistConnection, userId);
             }
         } catch (SQLException e) {

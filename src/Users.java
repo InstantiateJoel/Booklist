@@ -15,7 +15,7 @@ public class Users {
 
     /*
      This method is used, to check if the username / account exists in the database. If it exists, it will go
-     to the password validation
+     to the password validation. If user types in 'register' it goes to the register method
      */
     public static void checkUserName(Connection booklistConnection) {
         System.out.println("============Login to your booklist============");
@@ -23,7 +23,7 @@ public class Users {
             while (true) {
                 System.out.print("Please enter your username> ");
                 userName = userInput.nextLine().toLowerCase();
-                if (userName.equals("register")) { //It checks, if user types in "register". If so, it jumps to the register method
+                if (userName.equals("register")) {
                     System.out.println("Registering a new user...");
                     registerNewUser(booklistConnection);
                     break;
@@ -58,7 +58,6 @@ public class Users {
     public static int checkPasswordMatch(Connection booklistConnection, int userId) {
         try {
             while (true) {
-                // register new user variable
                 System.out.print(userName + " please enter your password> ");
                 userPassword = userInput.nextLine();
 
@@ -94,9 +93,26 @@ public class Users {
         return userId;
     }
 
+    public static void main(String[] args) {
+        try {
+            // connection to database
+            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
+
+            // start of the whole program
+            checkUserName(booklistConnection);
+
+            // closing of resources
+            userInput.close();
+            booklistConnection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
     /*
      Here are the new users registered. They choose their user / account name and their password
-     */
+    */
     public static void registerNewUser(Connection booklistConnection) {
         try {
             while (true) {
@@ -116,31 +132,15 @@ public class Users {
                         int rowsInserted = insertNewUserStatement.executeUpdate();
                         if (rowsInserted > 0) {
                             System.out.println("'" + userName + "'" + " was successfully registered!");
+                            checkUserName(booklistConnection);
                             break;
                         } else {
                             System.out.println("Something went wrong. Please try again.");
                         }
                     }
-
                     System.out.println("Username is registered!");
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            // connection to database
-            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
-            // start of the whole program
-            checkUserName(booklistConnection);
-
-            // closing of resources
-            userInput.close();
-            booklistConnection.close();
-
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
