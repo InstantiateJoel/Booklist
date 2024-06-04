@@ -54,7 +54,6 @@ public class Users {
      On here, it checks, if the password matches the username in the database. If it matches, the access is granted,
      if it does not match, the user is prompted, to try it again.
      */
-    @SuppressWarnings("UnusedReturnValue")
     public static int checkPasswordMatch(Connection booklistConnection, int userId) {
         try {
             while (true) {
@@ -78,7 +77,7 @@ public class Users {
                         System.out.println();
                         System.out.println("Access granted!");
                         System.out.println();
-                        Books.userOptions(booklistConnection, userId);
+                        Books.printAllBooks(booklistConnection, userId);
                         break;
 
                     } else if (!resultPassWordMatch.next()) {

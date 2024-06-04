@@ -22,21 +22,44 @@ public class Books {
     // Variable declarations
     public static String userChoice; // used to check which case from switch should be used
     public static String bookName, authorName, bookGenre, bookStatus; // used to get the input and safe it for the DB
-    public static String selectedBookName, selectedAuthorName;
+    public static String selectedBookName, selectedAuthorName, selectedGenre, selectedStatus;
     public static int selectedId;
 
     // SQL Queries
     public static final String insertBooksQuery = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
     public static final String deleteBookQuery = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
     public static final String checkBookExistsQuery = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
+    public static final String selectAllBooksQuery = "SELECT * FROM BOOKS WHERE USER_ID = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
      */
-    public static void userOptions(Connection booklistConnection, int userId) {
-        System.out.println("============Booklist============");
-        System.out.println();
-        System.out.println("These are your books:");
+    public static void printAllBooks(Connection booklistConnection, int userId) {
+        try {
+            // preparing sql statements
+            PreparedStatement selectAllBooksStatement = booklistConnection.prepareStatement(selectAllBooksQuery);
+            selectAllBooksStatement.setInt(1, userId);
+            ResultSet selectAllBooksResult = selectAllBooksStatement.executeQuery();
+
+            System.out.println("================BOOKLIST================");
+            System.out.println("These are your books:");
+            System.out.println("Title: \t\t\t\t\t" + "Author: \t\t\t\t\t" + "Genre: \t\t\t\t\t" + "Status: ");
+
+            while (selectAllBooksResult.next()) {
+                selectedId = selectAllBooksResult.getInt("USER_ID");
+                selectedBookName = selectAllBooksResult.getString("NAME");
+                selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
+                selectedGenre = selectAllBooksResult.getString("GENRE");
+                selectedStatus = selectAllBooksResult.getString("STATUS");
+
+                System.out.println(selectedBookName + selectedAuthorName + selectedGenre + selectedStatus);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+        public static void userOptions(Connection booklistConnection, int userId) {
         /*
          todo:
          see if you can print like a "table" with every book displayed like the sql rows
@@ -133,7 +156,6 @@ public class Books {
         }
     }
 
-
     // checks, if book already exists
     public static boolean checkBookExist(Connection booklistConnection, int userId) {
         try {
@@ -147,10 +169,6 @@ public class Books {
                         selectedId = checkBookExistResult.getInt("USER_ID");
                         selectedBookName = checkBookExistResult.getString("NAME");
                         selectedAuthorName = checkBookExistResult.getString("AUTHOR");
-
-                        //System.out.println("ID: " + selectedId);
-                        //System.out.println("Name: " + selectedBookName);
-                       // System.out.println("Author: " + selectedAuthorName);
 
                         if (selectedBookName.equalsIgnoreCase(bookName) && selectedAuthorName.equalsIgnoreCase(authorName)) {
                             return true;
