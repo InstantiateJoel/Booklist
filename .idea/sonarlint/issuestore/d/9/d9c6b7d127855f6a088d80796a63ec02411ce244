@@ -1,0 +1,31 @@
+
+ 	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$d678fc2e-a6b0-4d01-8c78-ee80097e6853
+ 	java:S135?"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$93321d05-831e-4434-aee5-ed3802543699
+˜
+java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(·×áÃûÿÿÿÿ8Î“Ïãş1J$82f64fd3-1400-43ae-b511-ad166f7600d7
+’
+java:S2095L"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Öƒ‰Ü8Î“Ïãş1J$28756956-68c7-469b-855b-a26d7a8700a3
+—
+java:S2095'"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¾§¤üÿÿÿÿ8Î“Ïãş1J$09305805-0c6b-4935-a301-434f5dfe2d5b
+m	java:S106"+Replace this use of System.out by a logger.(‚œßø8Î“Ïãş1J$20237216-9f26-4a65-9d31-79612eb34898
+m	java:S106"+Replace this use of System.out by a logger.(¹íø™8Î“Ïãş1J$d5914987-d315-4c94-9d26-6079c0fc5a1b
+m	java:S106"+Replace this use of System.out by a logger.(ššÂÛ8Î“Ïãş1J$9cf82134-89ed-4fe7-9e86-3078f72e136e
+r	java:S106$"+Replace this use of System.out by a logger.(œ²¥÷ıÿÿÿÿ8Î“Ïãş1J$0a91869a-78a8-4e4e-8e15-5d4aa1577ea4
+m	java:S1060"+Replace this use of System.out by a logger.(†ã™8Î“Ïãş1J$9cf8943e-d7a4-4589-b723-60c8b6a70dfa
+m	java:S106@"+Replace this use of System.out by a logger.(°áöŠ8Î“Ïãş1J$2402d357-a2ce-4e08-8bf9-8ece8a9ae4df
+m	java:S106D"+Replace this use of System.out by a logger.(ššÂÛ8Î“Ïãş1J$2d72f0e6-eee9-4247-81ee-afbcf2bd5c9f
+m	java:S106I"+Replace this use of System.out by a logger.(à¹Ç’8Î“Ïãş1J$8c964b53-990c-40aa-8c5a-04e5a736774c
+r	java:S106Q"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Î“Ïãş1J$70ccc9e8-d79a-4ed9-9e20-77bdb5ddc134
+m	java:S106R"+Replace this use of System.out by a logger.(ĞßÖš8Î“Ïãş1J$57b7004c-26ed-426d-81c1-444c77e37901
+r	java:S106S"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Î“Ïãş1J$353c2574-a1af-4d06-aade-0293c00ba6ef
+r	java:S106X"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Î“Ïãş1J$5953a5bb-638f-4008-a71d-50513bd82e71
+m	java:S106Y"+Replace this use of System.out by a logger.(Û¸Ìì8Î“Ïãş1J$163c8782-f193-488b-97d3-3c81eb774993
+y
+java:S6437f"6Revoke and change this password, as it is compromised.(¥‹™ı8Î“Ïãş1J$e062f16d-3660-4901-97ea-21f14e9503c3
+m	java:S106z"+Replace this use of System.out by a logger.(‹˜§¿8İ“Ïãş1J$1202c377-0681-40d2-add5-82c779ee7453
+r	java:S106}"+Replace this use of System.out by a logger.(œ²¥÷ıÿÿÿÿ8İ“Ïãş1J$d05a90e7-07d7-41ac-9dc4-168e3039e653
+r	java:S106"+Replace this use of System.out by a logger.(ƒóÀ¾ıÿÿÿÿ8İ“Ïãş1J$93b73c2b-a6d2-4676-8748-e63e6810bd6a
+n	java:S106‚"+Replace this use of System.out by a logger.(à¹Ç’8Ş“Ïãş1J$1529955f-2b1a-483c-b12c-02dec7414355
+n	java:S106‰"+Replace this use of System.out by a logger.(‡Ü¯Ğ8ß“Ïãş1J$2e1c48a0-ec8b-4071-aa45-e3d4e19068c8
+n	java:S106"+Replace this use of System.out by a logger.(²‰«Ë8ß“Ïãş1J$3d703943-5f66-416a-9086-ede13b7688a1
+m	java:S106"+Replace this use of System.out by a logger.(éç8ß“Ïãş1J$85ed7a3b-bc08-4621-9bf9-e040619fd451

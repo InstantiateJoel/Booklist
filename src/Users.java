@@ -1,17 +1,21 @@
 import java.sql.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Users {
     // Initialize Scanner
-    public static Scanner userInput = new Scanner(System.in);
+    private static final Scanner userInput = new Scanner(System.in);
+    private static final Logger usersLogger = Logger.getLogger(Users.class.getName());
 
     // Username and Password variables
-    public static String userName, userPassword;
+    private static String userName = "";
+    private static String userPassword;
 
     // strings to be used as the query for sql
-    public static final String checkUserQuery = "SELECT * FROM USERS WHERE USERNAME = ? ";
-    public static final String checkUserPwdQuery = "SELECT * FROM USERS WHERE LOWER(USERNAME) = ? AND BINARY USERPASSWORD = ? ";
-    public static final String insertNewUserQuery = "INSERT INTO USERS (USERNAME, USERPASSWORD) VALUES (? , ?)";
+    public static final String CHECK_USER_QUERY = "SELECT USERNAME FROM USERS WHERE USERNAME = ?";
+    public static final String CHECK_USER_PWD_QUERY = "SELECT USERNAME, USERPASSWORD FROM USERS WHERE LOWER(USERNAME) = ? AND BINARY USERPASSWORD = ?";
+    public static final String INSERT_NEW_USER_QUERY = "INSERT INTO USERS (USERNAME, USERPASSWORD) VALUES (? , ?)";
 
     /*
      This method is used, to check if the username / account exists in the database. If it exists, it will go
@@ -32,7 +36,7 @@ public class Users {
                     System.out.println("Field 'Username' is required!");
 
                 } else {
-                    PreparedStatement checkUsersExists = booklistConnection.prepareStatement(checkUserQuery);
+                    PreparedStatement checkUsersExists = booklistConnection.prepareStatement(CHECK_USER_QUERY);
                     checkUsersExists.setString(1, userName);
                     ResultSet resultCheckUser = checkUsersExists.executeQuery();
                     if (resultCheckUser.next()) {
@@ -46,7 +50,7 @@ public class Users {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(System.out);
+            usersLogger.log(Level.SEVERE, "SQL Exception occurred while checking username.");
         }
     }
 
@@ -69,7 +73,7 @@ public class Users {
                     System.out.println("Field 'Password' is required!");
 
                 } else {
-                    PreparedStatement checkUserPwdMatch = booklistConnection.prepareStatement(checkUserPwdQuery);
+                    PreparedStatement checkUserPwdMatch = booklistConnection.prepareStatement(CHECK_USER_PWD_QUERY);
                     checkUserPwdMatch.setString(1, userName.toLowerCase());
                     checkUserPwdMatch.setString(2, userPassword);
                     ResultSet resultPassWordMatch = checkUserPwdMatch.executeQuery();
@@ -87,7 +91,7 @@ public class Users {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(System.out);
+            usersLogger.log(Level.SEVERE,"SQL Exception occurred, while checking the password.");
         }
         return userId;
     }
@@ -105,7 +109,7 @@ public class Users {
             booklistConnection.close();
 
         } catch (SQLException e) {
-            e.printStackTrace(System.out);
+            usersLogger.log(Level.SEVERE, "SQL Exception occurred, while trying to check  username and password.");
         }
     }
 
@@ -125,7 +129,7 @@ public class Users {
                     if (userPassword.isEmpty()) {
                         System.out.println("Field 'Password' is required!");
                     } else {
-                        PreparedStatement insertNewUserStatement = booklistConnection.prepareStatement(insertNewUserQuery);
+                        PreparedStatement insertNewUserStatement = booklistConnection.prepareStatement(INSERT_NEW_USER_QUERY);
                         insertNewUserStatement.setString(1, userName);
                         insertNewUserStatement.setString(2, userPassword);
                         int rowsInserted = insertNewUserStatement.executeUpdate();
@@ -141,7 +145,7 @@ public class Users {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(System.out);
+           usersLogger.log(Level.SEVERE,"SQL Exception occurred, while registering new user.");
         }
     }
 }
