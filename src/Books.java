@@ -25,6 +25,7 @@ public class Books {
     private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
+    private static final String[] bookStatusOptions = {"read", "shelf", "ordered", "lend"};
     public  static int selectedId;
 
     // SQL Queries
@@ -77,7 +78,7 @@ public class Books {
                  \
                 Enter number>""");
             // used to check which case from switch should be used
-            String userChoice = "";
+            String userChoice;
             while (true) {
             userChoice = userInput.nextLine();
             if (userChoice.isEmpty()) {
@@ -133,7 +134,7 @@ public class Books {
                 break;
             }
 
-            System.out.print("Enter the name of the status (read, shelf, ordered, lend)> ");
+            System.out.print("Enter the name of the status: ");
             bookStatus = userInput.nextLine();
             if (bookStatus.isEmpty()) {
                 System.out.println("The status of the book is required!");

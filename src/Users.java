@@ -13,8 +13,8 @@ public class Users {
     private static String userPassword;
 
     // strings to be used as the query for sql
-    public static final String CHECK_USER_QUERY = "SELECT USERNAME FROM USERS WHERE USERNAME = ?";
-    public static final String CHECK_USER_PWD_QUERY = "SELECT USERNAME, USERPASSWORD FROM USERS WHERE LOWER(USERNAME) = ? AND BINARY USERPASSWORD = ?";
+    public static final String CHECK_USER_QUERY = "SELECT * FROM USERS WHERE USERNAME = ?";
+    public static final String CHECK_USER_PWD_QUERY = "SELECT * FROM USERS WHERE LOWER(USERNAME) = ? AND BINARY USERPASSWORD = ?";
     public static final String INSERT_NEW_USER_QUERY = "INSERT INTO USERS (USERNAME, USERPASSWORD) VALUES (? , ?)";
 
     /*

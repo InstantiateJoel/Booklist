@@ -1,46 +1,26 @@
 
 
-java:S1104"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8ü¦Ğáş1J$613d281b-4cb8-4009-9e2d-6f65523db349
+java:S1104"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8Å ”äş1J$09d3814c-ef4e-4808-b0ae-30c3bd4307b7
 x
-java:S1444"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8‚§Ğáş1J$1c7e813e-0050-4be5-87a1-df88706c4083
-z	java:S135m"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8ğÖÑãş1
+java:S1444"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8Ç ”äş1J$2ff7a7a9-b120-468b-aaec-c47bcee418ba
+z	java:S135n"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8œõ”äş1
 j
-java:S1192r"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8ğÖÑãş1
+java:S1192s"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8œõ”äş1
 r
-java:S2095Û"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8ñÖÑãş1
+java:S2095Ÿ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8œõ”äş1
+r
+java:S2095Ü"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8œõ”äş1
 ’
-java:S2095,"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8„§Ğáş1J$892f6624-0520-4bab-a021-298d1f00f68c
-r
-java:S2095"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8ñÖÑãş1
+java:S2095-"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8Ç ”äş1J$d3d69773-44dc-4e19-b299-4e67daeff69f
 m
-java:S2095·"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8ñÖÑãş1
+java:S2095¸"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8œõ”äş1
 g
-java:S6905""Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8§Ğáş1J$915011f5-a61e-4c03-b073-130c8edaf803
-m	java:S1060"+Replace this use of System.out by a logger.(Ÿ²‰İ8§Ğáş1J$57782cf2-dc2d-48e6-80d6-7c5c692bb7fc
-m	java:S1061"+Replace this use of System.out by a logger.(¤Æçà8§Ğáş1J$7f5ba31d-3d98-44c5-aa65-aa4babd1cb25
-m	java:S1068"+Replace this use of System.out by a logger.(«˜Êã8…¦Ôáş1J$573520c1-fe19-44c4-99ff-84ac2010251b
-r	java:S106A"+Replace this use of System.out by a logger.(ÅŠ¤Ùøÿÿÿÿ8¥—æâş1J$e5834bf1-dacf-445e-8057-e6db55d2b471
-G	java:S106T"+Replace this use of System.out by a logger.(äè…Ö8ùÖÑãş1
-G	java:S106g"+Replace this use of System.out by a logger.(»®İ 8úÖÑãş1
+java:S6905#"Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8Ì ”äş1J$e46d1848-33ec-4ebf-8783-3fda5ada497e
 o
-java:S3776l"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ğ™ºâ8úÖÑãş1
-G	java:S106n"+Replace this use of System.out by a logger.(“Ş½ò8ûÖÑãş1
-L	java:S106q"+Replace this use of System.out by a logger.(ƒÌ£øÿÿÿÿ8ûÖÑãş1
-F	java:S106v"+Replace this use of System.out by a logger.(¿¡¥*8ûÖÑãş1
-r	java:S106y"+Replace this use of System.out by a logger.(¿Èóşüÿÿÿÿ8µ‡Ûáş1J$f9d931a9-08a6-41b3-9678-ac7b2ceb5dbe
-G	java:S106"+Replace this use of System.out by a logger.(ùèáˆ8üÖÑãş1
-M	java:S106ˆ"+Replace this use of System.out by a logger.(™Ó¢»ûÿÿÿÿ8üÖÑãş1
-M	java:S106‹"+Replace this use of System.out by a logger.(±«ñÏúÿÿÿÿ8üÖÑãş1
-H	java:S106•"+Replace this use of System.out by a logger.(š¯¶Æ8üÖÑãş1
+java:S3776m"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ğ™ºâ8¤õ”äş1
 b
-java:S6905!"Don't use the query "SELECT *".(èº˜Õ8·§Ğáş1J$0d8bcc0a-a100-40e1-8d92-90bc93fe983b
-H	java:S106Á"+Replace this use of System.out by a logger.(îÃ€ø8€×Ñãş1
-M	java:S106Ä"+Replace this use of System.out by a logger.(ÉŞ¤–ûÿÿÿÿ8€×Ñãş1
-G	java:S106Ï"+Replace this use of System.out by a logger.(‡ÜÄM8€×Ñãş1
-M	java:S106Ò"+Replace this use of System.out by a logger.(Üè“Éıÿÿÿÿ8×Ñãş1
-H	java:S106Ö"+Replace this use of System.out by a logger.(šµ’Œ8×Ñãş1
-M	java:S106â"+Replace this use of System.out by a logger.(¹µÜ»üÿÿÿÿ8‚×Ñãş1
-M	java:S106ã"+Replace this use of System.out by a logger.(ŞÒ—üÿÿÿÿ8‚×Ñãş1
-M	java:S106æ"+Replace this use of System.out by a logger.(Ùœõ†ıÿÿÿÿ8‚×Ñãş1
+java:S6905""Don't use the query "SELECT *".(èº˜Õ8Ñ ”äş1J$b07e53e0-99ae-4e07-a4b4-ffacf78c7f59
 T
-java:S6437ñ"6Revoke and change this password, as it is compromised.(¥‹™ı8ƒ×Ñãş1
+java:S6437ò"6Revoke and change this password, as it is compromised.(¥‹™ı8©õ”äş1
+}
+java:S1068"5Remove this unused "bookStatusOptions" private field.(—Ã¡ìúÿÿÿÿ8Ô ”äş1J$f89664ca-1989-4ccc-93ee-39b009b1222a
