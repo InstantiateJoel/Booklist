@@ -27,14 +27,16 @@ public class Books {
     private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
-    private static final String[] bookStatusOptions = {"read", "shelf", "ordered", "lend"};
-    private static final List<String> bookStatusOptionsList = Arrays.asList(bookStatusOptions);
-    public  static int selectedId;
+    private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}};
+    public static int selectedId;
 
-    // SQL Queries
+    // SQL query insert
     public static final String INSERT_INTO_BOOKS_QUERY = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
+    // SQL query delete
     public static final String DELETE_BOOK_QUERY = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
+    // SQL query check book exists
     public static final String CHECK_BOOK_EXISTS_QUERY = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
+    // SQL query select all books from user
     public static final String SELECT_ALL_BOOKS_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ?";
 
     /*
@@ -51,13 +53,19 @@ public class Books {
 
             System.out.println("================BOOKLIST================");
             System.out.println("These are your books:");
+            //if (!selectAllBooksResult.next()) {
+              //  System.out.println("No books found.");
+                //userOptions(booklistConnection, userId);
+            //L}
+
             while (selectAllBooksResult.next()) {
                 selectedId = selectAllBooksResult.getInt("USER_ID");
                 selectedBookName = selectAllBooksResult.getString("NAME");
                 selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
                 selectedGenre = selectAllBooksResult.getString("GENRE");
                 selectedStatus = selectAllBooksResult.getString("STATUS");
-                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName  + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
+                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
+
             }
             userOptions(booklistConnection, userId);
         } catch (SQLException e) {
@@ -65,24 +73,22 @@ public class Books {
         }
     }
 
-        public static void userOptions(Connection booklistConnection, int userId) {
+    public static void userOptions(Connection booklistConnection, int userId) {
         System.out.print("""
                 Please choose from the following options (use the numbers):
                  \
-                1: Add book
+                1: Print books
                  \
-                2: Alter Status
+                2: Add a book
                  \
-                4: Filter
-                 \
-                5: Select / show all books
-                 \
-                6: Delete book
+                3: Change Status
+                \
+                4: Delete book
                  \
                 Enter number>""");
-            // used to check which case from switch should be used
-            String userChoice;
-            while (true) {
+        // used to check which case from switch should be used
+        String userChoice;
+        while (true) {
             userChoice = userInput.nextLine();
             if (userChoice.isEmpty()) {
                 System.out.println("You need to enter one number from above, or type 'help' to get the possibilities again.");
@@ -97,11 +103,10 @@ public class Books {
             case "2": // add a book
                 addBook(booklistConnection, userId);
                 break;
-            case "3": // Filtering for specific book(s)
+            case "3": // Change status of a book
+                changeBookStatus(booklistConnection, userId);
                 break;
-            case "4": // change status of a book
-                break;
-            case "5": // delete a book
+            case "4": // Delete a book
                 deleteBook(booklistConnection, userId);
                 break;
             default:
@@ -138,16 +143,28 @@ public class Books {
                 break;
             }
 
-            System.out.print("Enter the name of the status: ");
+            System.out.print("Enter the name of the status>" + " ");
             bookStatus = userInput.nextLine();
             if (bookStatus.isEmpty()) {
                 System.out.println("The status of the book is required!");
             } else if (bookStatus.equals("options")) {
                 userOptions(booklistConnection, userId);
                 break;
+            } else {
+                boolean bookStatusFound = false;
+                for (String[] options : bookStatusOptions) {
+                    if (options[0].equals(bookStatus)) {
+                        bookStatus = options[1];
+                        bookStatusFound = true;
+                        break;
+                    }
+                }
+                if (!bookStatusFound) {
+                    System.out.println("Please enter a valid status!");
+                }
             }
             if (!checkBookExist(booklistConnection, userId)) {
-                insertIntoBooks(booklistConnection, userId);
+                insertIntoBooks(booklistConnection, userId, bookStatus);
                 break;
             } else {
                 System.out.println("This book already exists. Please try again. If you want to use another option type 'options'.");
@@ -180,9 +197,8 @@ public class Books {
         return false;
     }
 
-
     // this method inserts a new book in the DB
-    public static void insertIntoBooks(Connection booklistConnection, int userId) {
+    public static void insertIntoBooks(Connection booklistConnection, int userId, String bookStatus) {
         try {
             PreparedStatement insertBooksStatement = booklistConnection.prepareStatement(INSERT_INTO_BOOKS_QUERY);
             insertBooksStatement.setInt(1, userId);
@@ -200,8 +216,12 @@ public class Books {
                 System.out.println("Something went wrong! Please try again or contact the admin!");
             }
         } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE,"SQL Exception occurred, while inserting book.", e);
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while inserting book.", e);
         }
+    }
+
+    public static void changeBookStatus(Connection booklistConnection, int userId) {
+
     }
 
     // this method deletes a book from the DB
@@ -235,7 +255,7 @@ public class Books {
                 userOptions(booklistConnection, userId);
             }
         } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE,"SQL Exception occurred, while deleting a book.", e);
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
         }
     }
 
@@ -252,5 +272,5 @@ public class Books {
         } catch (SQLException e) {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
         }
-        }
     }
+}
