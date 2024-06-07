@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,7 @@ public class Books {
     private static String selectedBookName;
     private static String selectedAuthorName;
     private static final String[] bookStatusOptions = {"read", "shelf", "ordered", "lend"};
+    private static final List<String> bookStatusOptionsList = Arrays.asList(bookStatusOptions);
     public  static int selectedId;
 
     // SQL Queries
@@ -88,14 +91,15 @@ public class Books {
             }
         }
         switch (userChoice) {
-            case "1": // add book
+            case "1": // print all books
+                printAllBooks(booklistConnection, userId);
+                break;
+            case "2": // add a book
                 addBook(booklistConnection, userId);
                 break;
-            case "2":// Change status of a book
+            case "3": // Filtering for specific book(s)
                 break;
-            case "3": // Change a column of a book
-                break;
-            case "4": // Filtering for specific books
+            case "4": // change status of a book
                 break;
             case "5": // delete a book
                 deleteBook(booklistConnection, userId);
@@ -138,7 +142,6 @@ public class Books {
             bookStatus = userInput.nextLine();
             if (bookStatus.isEmpty()) {
                 System.out.println("The status of the book is required!");
-                continue;
             } else if (bookStatus.equals("options")) {
                 userOptions(booklistConnection, userId);
                 break;
