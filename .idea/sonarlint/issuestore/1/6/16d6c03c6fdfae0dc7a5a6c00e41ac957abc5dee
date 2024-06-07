@@ -1,33 +1,29 @@
 
 
-java:S1104"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8ßŒŸÿ1J$406eff07-4c21-4b01-97b4-4f7fe55f3b15
+java:S1104"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8ßŒŸÿ1J$6ebd7e1b-2697-4dec-91d0-b08bddfbb450
 x
-java:S1444"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8îŒŸÿ1J$52a5174b-a4b0-4174-ab03-9f53e7d8ba52
-z	java:S135w"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Åç¤Ÿÿ1
+java:S1444"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8îŒŸÿ1J$1eca863d-5126-40ce-9ea8-0b08fe66078f
+z	java:S135u"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8¦–©Ÿÿ1
 j
-java:S1192|"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8Æç¤Ÿÿ1
-m
-java:S2095Ë"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8Æç¤Ÿÿ1
+java:S1192z"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8§–©Ÿÿ1
 r
-java:S2095³"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8Æç¤Ÿÿ1
-r
-java:S2095ó"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8Çç¤Ÿÿ1
+java:S2095±"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8§–©Ÿÿ1
 ’
-java:S20952"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8îŒŸÿ1J$39e17ad1-0413-4c12-8b6a-dec40aedb8ad
+java:S20950"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8îŒŸÿ1J$aa48f997-02fc-4d0f-b382-1aea4f8feb5d
+m
+java:S2095É"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8¨–©Ÿÿ1
+r
+java:S2095ñ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8¨–©Ÿÿ1
 ¤
-java:S1186ß"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‡Ì®üÿÿÿÿÿ8Èç¤Ÿÿ1
+java:S1186İ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‡Ì®üÿÿÿÿÿ8¨–©Ÿÿ1
 ›
-java:S1450"YRemove the "bookStatus" field and declare it as a local variable in the relevant methods.(³”ëP8ûŒŸÿ1J$2e948709-9f4a-4551-918f-f2dafb259a93
+java:S1450"YRemove the "bookStatus" field and declare it as a local variable in the relevant methods.(³”ëP8ûŒŸÿ1J$91c562c1-b6d4-426f-8e3b-d0022b1407d1
 g
-java:S6905("Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8ˆŒŸÿ1J$515f961c-5b90-42db-aadc-3e8dd12bda31
-ƒ	java:S1258"<This block of commented-out lines of code should be removed.(­²¹ßûÿÿÿÿ8²ÅŸÿ1J$3fd383e3-f468-42fb-9a71-6a49193916ed
+java:S6905&"Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8ˆŒŸÿ1J$b74c4192-9fc1-4137-86f7-461d434cdf6f
+ƒ	java:S1256"<This block of commented-out lines of code should be removed.(­²¹ßûÿÿÿÿ8²ÅŸÿ1J$3fdec78a-28c5-407b-bfc5-4946b7f6b4d8
 o
-java:S3776v"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(ğ™ºâ8âç¤Ÿÿ1
+java:S3776t"RRefactor this method to reduce its Cognitive Complexity from 27 to the 15 allowed.(ğ™ºâ8¨–©Ÿÿ1
 b
-java:S6905&"Don't use the query "SELECT *".(èº˜Õ8«ŒŸÿ1J$2cb4204c-deef-4774-b65a-9558f7845a67
+java:S6905$"Don't use the query "SELECT *".(èº˜Õ8«ŒŸÿ1J$0779d1b7-0339-4b5e-90b0-dc7846a22102
 T
-java:S6437‰"6Revoke and change this password, as it is compromised.(¥‹™ı8ëç¤Ÿÿ1
-u
-java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8¼òŒŸÿ1J$f731239a-0001-44d8-938c-45ce3bc64ab3
-s
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¼òŒŸÿ1J$01157a33-2509-4a5b-9a8e-1a0ef8cf6355
+java:S6437‡"6Revoke and change this password, as it is compromised.(¥‹™ı8©–©Ÿÿ1
