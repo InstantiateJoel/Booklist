@@ -1,10 +1,10 @@
 
  	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆžÿÿÿÿÿ8Î“Ïãþ1J$e991354c-ec63-4996-83f1-fe50acc18833
  	java:S135?"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆžÿÿÿÿÿ8Î“Ïãþ1J$eef382e1-2078-4a36-8dc8-4333b353e370
-˜
-java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(·×áÃûÿÿÿÿ8Î“Ïãþ1J$e628997f-f27d-4c83-86c2-a4afb39c0f81
 ’
 java:S2095L"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Öƒ‰Ü8Î“Ïãþ1J$b2f5809d-60e4-43ed-87d5-48c121950250
+˜
+java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(·×áÃûÿÿÿÿ8Î“Ïãþ1J$e628997f-f27d-4c83-86c2-a4afb39c0f81
 —
 java:S2095'"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¾Ž§¤üÿÿÿÿ8Î“Ïãþ1J$f48bc922-83e7-429a-a477-8c2c5f1570bc
 g

@@ -7,11 +7,10 @@ import java.util.logging.Logger;
 
 /*
  Ideas:
- - When printing all the books, make it in a "table view" like the DB rows
- - either make table wishlist (with wishlist class maybe then) or use the status wishlist
-
- Code ideas:
- when giving the status for the insert/ change etc. Maybe make an array? (1, read; 2, ordered...) so there´s no typo problem with inputs
+ Todo:
+ 1. Code the change status method
+ 2. either make table wishlist (with wishlist class maybe then) or use the status wishlist
+ 3. When printing all the books, make it in a "table view" like the DB rows
  */
 
 public class Books {
@@ -29,13 +28,16 @@ public class Books {
     private static String selectedAuthorName;
     private static final String[] bookStatusOptions = {"read", "shelf", "ordered", "lend"};
     private static final List<String> bookStatusOptionsList = Arrays.asList(bookStatusOptions);
-    public  static int selectedId;
+    public static int selectedId;
 
     // SQL Queries
     public static final String INSERT_INTO_BOOKS_QUERY = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
     public static final String DELETE_BOOK_QUERY = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
     public static final String CHECK_BOOK_EXISTS_QUERY = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
     public static final String SELECT_ALL_BOOKS_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ?";
+    public static final String DISABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 0";
+    public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
+    public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -57,7 +59,7 @@ public class Books {
                 selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
                 selectedGenre = selectAllBooksResult.getString("GENRE");
                 selectedStatus = selectAllBooksResult.getString("STATUS");
-                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName  + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
+                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
             }
             userOptions(booklistConnection, userId);
         } catch (SQLException e) {
@@ -65,24 +67,24 @@ public class Books {
         }
     }
 
-        public static void userOptions(Connection booklistConnection, int userId) {
+    public static void userOptions(Connection booklistConnection, int userId) {
         System.out.print("""
                 Please choose from the following options (use the numbers):
                  \
-                1: Add book
+                1: Print all books
                  \
-                2: Alter Status
+                2: Add a book
                  \
-                4: Filter
+                3: Filter books
                  \
-                5: Select / show all books
+                4: Change status of a book
                  \
-                6: Delete book
+                5: Delete book
                  \
                 Enter number>""");
-            // used to check which case from switch should be used
-            String userChoice;
-            while (true) {
+        // used to check which case from switch should be used
+        String userChoice;
+        while (true) {
             userChoice = userInput.nextLine();
             if (userChoice.isEmpty()) {
                 System.out.println("You need to enter one number from above, or type 'help' to get the possibilities again.");
@@ -100,6 +102,7 @@ public class Books {
             case "3": // Filtering for specific book(s)
                 break;
             case "4": // change status of a book
+                changeStatus(booklistConnection, userId);
                 break;
             case "5": // delete a book
                 deleteBook(booklistConnection, userId);
@@ -200,7 +203,45 @@ public class Books {
                 System.out.println("Something went wrong! Please try again or contact the admin!");
             }
         } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE,"SQL Exception occurred, while inserting book.", e);
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while inserting book.", e);
+        }
+    }
+
+    // changes the status of a book
+    public static void changeStatus(Connection booklistConnection, int userId) {
+        try {
+            while (true) {
+                System.out.println("Please enter the following information about the book you want to change the status:");
+                System.out.print("Name> ");
+                bookName = userInput.nextLine();
+                System.out.print("Author> ");
+                authorName = userInput.nextLine();
+                System.out.print("Status> ");
+                bookStatus = userInput.nextLine();
+
+                if (bookName.isEmpty() || authorName.isEmpty() || bookStatus.isEmpty())  {
+                    System.out.println("You need to enter the name of the book and the author nam!");
+                } else {
+                    PreparedStatement disableSafeUpdateStatement = booklistConnection.prepareStatement(DISABLE_SAFE_UPDATES_QUERY);
+                    disableSafeUpdateStatement.executeUpdate();
+                    PreparedStatement changeBookStatusStatement = booklistConnection.prepareStatement(CHANGE_BOOK_STATUS_QUERY);
+                    changeBookStatusStatement.setString(1, bookStatus);
+                    changeBookStatusStatement.setString(2, bookName);
+                    changeBookStatusStatement.setString(3, authorName);
+                    changeBookStatusStatement.setInt(4, userId);
+
+                    int rowsAffected = changeBookStatusStatement.executeUpdate();
+                    if (rowsAffected > 0) {
+                        System.out.println("Status of the book " + bookName + " changed to " + bookStatus + ".");
+                        userOptions(booklistConnection, userId);
+                        break;
+                    } else {
+                        System.out.println("Error occurred. Please try again.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while changing the status of a book.");
         }
     }
 
