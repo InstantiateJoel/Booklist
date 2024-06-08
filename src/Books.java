@@ -8,9 +8,9 @@ import java.util.logging.Logger;
 /*
  Ideas:
  Todo:
- 1. Code the change status method
- 2. either make table wishlist (with wishlist class maybe then) or use the status wishlist
- 3. When printing all the books, make it in a "table view" like the DB rows
+ 1. When printing all the books, make it in a "table view" like the DB rows
+ 2. Debug
+ 3. Probably GUI
  */
 
 public class Books {
@@ -26,8 +26,7 @@ public class Books {
     private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
-    private static final String[] bookStatusOptions = {"read", "shelf", "ordered", "lend"};
-    private static final List<String> bookStatusOptionsList = Arrays.asList(bookStatusOptions);
+    private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}, {"5", "wishlist"}};
     public static int selectedId;
 
     // SQL Queries
@@ -148,6 +147,15 @@ public class Books {
             } else if (bookStatus.equals("options")) {
                 userOptions(booklistConnection, userId);
                 break;
+            } else {
+                boolean bookStatusFound = false;
+                for (String[] options : bookStatusOptions) {
+                    if (options[0].equals(bookStatus)) {
+                        bookStatus = options[1];
+                        bookStatusFound = true;
+                        break;
+                    }
+                }
             }
             if (!checkBookExist(booklistConnection, userId)) {
                 insertIntoBooks(booklistConnection, userId);
@@ -219,24 +227,36 @@ public class Books {
                 System.out.print("Status> ");
                 bookStatus = userInput.nextLine();
 
-                if (bookName.isEmpty() || authorName.isEmpty() || bookStatus.isEmpty())  {
-                    System.out.println("You need to enter the name of the book and the author nam!");
+                if (bookName.isEmpty() || authorName.isEmpty() || bookStatus.isEmpty()) {
+                    System.out.println("You need to enter the name of the book and the author name!");
                 } else {
-                    PreparedStatement disableSafeUpdateStatement = booklistConnection.prepareStatement(DISABLE_SAFE_UPDATES_QUERY);
-                    disableSafeUpdateStatement.executeUpdate();
-                    PreparedStatement changeBookStatusStatement = booklistConnection.prepareStatement(CHANGE_BOOK_STATUS_QUERY);
-                    changeBookStatusStatement.setString(1, bookStatus);
-                    changeBookStatusStatement.setString(2, bookName);
-                    changeBookStatusStatement.setString(3, authorName);
-                    changeBookStatusStatement.setInt(4, userId);
+                    boolean statusFound = false;
+                    for (String[] options : bookStatusOptions) {
+                        if (options[0].equals(bookStatus)) {
+                            bookStatus = options[1];
+                            statusFound = true;
+                            break;
+                        }
+                    }
+                    if (statusFound) {
+                        PreparedStatement disableSafeUpdateStatement = booklistConnection.prepareStatement(DISABLE_SAFE_UPDATES_QUERY);
+                        disableSafeUpdateStatement.executeUpdate();
+                        PreparedStatement changeBookStatusStatement = booklistConnection.prepareStatement(CHANGE_BOOK_STATUS_QUERY);
+                        changeBookStatusStatement.setString(1, bookStatus);
+                        changeBookStatusStatement.setString(2, bookName);
+                        changeBookStatusStatement.setString(3, authorName);
+                        changeBookStatusStatement.setInt(4, userId);
 
-                    int rowsAffected = changeBookStatusStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        System.out.println("Status of the book " + bookName + " changed to " + bookStatus + ".");
-                        userOptions(booklistConnection, userId);
-                        break;
-                    } else {
-                        System.out.println("Error occurred. Please try again.");
+                        int rowsAffected = changeBookStatusStatement.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Status of the book " + bookName + " changed to " + bookStatus + ".");
+                            PreparedStatement enableSafeUpdateStatement = booklistConnection.prepareStatement(ENABLE_SAFE_UPDATES_QUERY);
+                            enableSafeUpdateStatement.executeUpdate();
+                            userOptions(booklistConnection, userId);
+                            break;
+                        } else {
+                            System.out.println("Error occurred. Please try again.");
+                        }
                     }
                 }
             }
@@ -258,6 +278,14 @@ public class Books {
                 if (bookName.isEmpty() || authorName.isEmpty()) {
                     System.out.println("You need to enter both the name of the book and the author!");
                 } else {
+                    boolean bookStatusFound = false;
+                    for (String[] options : bookStatusOptions) {
+                        if (options[0].equals(bookStatus)) {
+                            bookStatus = options[1];
+                            bookStatusFound = true;
+                            break;
+                        }
+                    }
                     break;
                 }
             }
@@ -276,7 +304,7 @@ public class Books {
                 userOptions(booklistConnection, userId);
             }
         } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE,"SQL Exception occurred, while deleting a book.", e);
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
         }
     }
 
@@ -293,5 +321,5 @@ public class Books {
         } catch (SQLException e) {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
         }
-        }
     }
+}
