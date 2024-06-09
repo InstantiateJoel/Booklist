@@ -7,9 +7,8 @@ import java.util.logging.Logger;
 
 /*
  Todo:
- 1. When printing all the books, make it in a "table view" like the DB rows
- 2. Debug
- 3. Probably GUI
+ 1. Debug
+ 2. Probably GUI
 
  Coding Ideas:
  Make a method, that gets all the user input for the books (name, author...) so theres basically only the methods left,
