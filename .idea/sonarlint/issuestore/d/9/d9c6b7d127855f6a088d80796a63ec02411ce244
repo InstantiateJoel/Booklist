@@ -1,15 +1,15 @@
 
- 	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$e991354c-ec63-4996-83f1-fe50acc18833
- 	java:S135?"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$eef382e1-2078-4a36-8dc8-4333b353e370
+ 	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$84c0aa23-7b15-4cf3-993d-a7721a1ab355
+ 	java:S135?"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8Î“Ïãş1J$f920c1f9-55f1-4f13-9178-8741774e4c54
 —
-java:S2095'"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¾§¤üÿÿÿÿ8Î“Ïãş1J$f48bc922-83e7-429a-a477-8c2c5f1570bc
+java:S2095'"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¾§¤üÿÿÿÿ8Î“Ïãş1J$64e513d3-48c9-4a00-8a3f-7b568bcf5551
 ’
-java:S2095L"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Öƒ‰Ü8Î“Ïãş1J$b2f5809d-60e4-43ed-87d5-48c121950250
+java:S2095L"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(Öƒ‰Ü8Î“Ïãş1J$a9d4ee84-b28a-47aa-b11c-f8b712316c37
 ˜
-java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(·×áÃûÿÿÿÿ8Î“Ïãş1J$e628997f-f27d-4c83-86c2-a4afb39c0f81
+java:S2095„"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(·×áÃûÿÿÿÿ8Î“Ïãş1J$7718b037-e467-442d-ae6b-54dc80dc39c2
 g
-java:S6905"Don't use the query "SELECT *".(¥í¦èıÿÿÿÿ8ˆòóãş1J$833a1fa7-befd-4886-bf75-12b433712bfd
+java:S6905"Don't use the query "SELECT *".(¥í¦èıÿÿÿÿ8ˆòóãş1J$658a1e33-c933-43f9-8f11-dbebad0d202d
 b
-java:S6905"Don't use the query "SELECT *".(Ö÷÷÷8îôãş1J$64db4fdf-b808-4145-94a5-ccf36cf49e2d
-S
-java:S6437f"6Revoke and change this password, as it is compromised.(¥‹™ı8Šæœ‹ÿ1
+java:S6905"Don't use the query "SELECT *".(Ö÷÷÷8îôãş1J$4657ca11-c44f-4e42-8fa3-0016c12b9627
+y
+java:S6437f"6Revoke and change this password, as it is compromised.(¥‹™ı8Šæœ‹ÿ1J$fd9c1bcb-c9d3-4c46-bc86-56de478d1b27

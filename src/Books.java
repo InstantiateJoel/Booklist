@@ -53,7 +53,7 @@ public class Books {
             selectAllBooksStatement.setInt(1, userId);
             ResultSet selectAllBooksResult = selectAllBooksStatement.executeQuery();
 
-            System.out.println("================BOOKLIST================");
+            System.out.println("===========BOOKLIST===========");
             System.out.println("These are your books:");
             while (selectAllBooksResult.next()) {
                 selectedId = selectAllBooksResult.getInt("USER_ID");
@@ -61,8 +61,15 @@ public class Books {
                 selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
                 selectedGenre = selectAllBooksResult.getString("GENRE");
                 selectedStatus = selectAllBooksResult.getString("STATUS");
-                System.out.println("Title: " + selectedBookName + "     Author: " + selectedAuthorName + "     Genre: " + selectedGenre + "     Status: " + selectedStatus);
+
+                // print all the books
+                System.out.println("------------------------------");
+                System.out.println("Title:  " + selectedBookName);
+                System.out.println("Author: " +  selectedAuthorName);
+                System.out.println("Genre:  " + selectedGenre);
+                System.out.println("Status: " + selectedStatus);
             }
+            System.out.println("------------------------------");
             userOptions(booklistConnection, userId);
         } catch (SQLException e) {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while fetching books", e);
