@@ -6,11 +6,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- Ideas:
  Todo:
  1. When printing all the books, make it in a "table view" like the DB rows
  2. Debug
  3. Probably GUI
+
+ Coding Ideas:
+ Make a method, that gets all the user input for the books (name, author...) so theres basically only the methods left,
+ that make the sql parts.
  */
 
 public class Books {
