@@ -1019,8 +1019,6 @@ w
 G.idea/sonarlint/issuestore/4/6/463f2757e326aed5c2561a8020ce4f4c3dcfc8f3,1\c\1ca714271b49fb0b7fe336c44cc8bba863f8ee2f
 w
 G.idea/sonarlint/issuestore/4/9/494fdd55bc8871151221a40c424a972e269fc28e,1\f\1f64b545306812228703463c54ac30162bff4ea2
-A
-src/UnitTest.java,a\a\aa7adcbb9915f14e5f0a5db4abd937e7cc7c6c38
 w
 G.idea/sonarlint/issuestore/5/9/59a44e3b419d86872af6daef9647c45528a05f59,9\8\98ed906f01c3b4d1db6b15a31d1b89fe70cc0163
 w

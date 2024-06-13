@@ -9,6 +9,16 @@ import java.util.logging.Logger;
  that make the sql parts.
  */
 
+/*
+todo:
+1. Add filtering for books
+2. when printing books, and no books are existent, print no books yet or some
+3. Status can only be one of the numbers
+4. (maybe add 'options' to delete book, to go back
+5. add exit, to exit and log out of the book list
+
+ */
+
 public class Books {
     // Scanner initialization
     public static final Scanner userInput = new Scanner(System.in);

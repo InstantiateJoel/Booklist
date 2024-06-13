@@ -1,42 +1,44 @@
 
 
-java:S1104"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8—É©„2J$b3e0c8a5-0663-4ae0-a53d-b29ed283a571
+java:S1104$"VMake selectedId a static final constant or non-public and provide accessors if needed.(Ï­¦õıÿÿÿÿ8¹Áğ†2J$fb98e030-93e5-4fa5-b24b-0d40b00ca280
 x
-java:S1444"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8—É©„2J$ffc133b6-a631-4963-9181-94e363f6735a
-z	java:S135w"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8îÈ¾„2
-j
-java:S1192|"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8‚É¾„2
-r
-java:S2095ö"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÉÄúéüÿÿÿÿ8ƒÉ¾„2
-r
-java:S2095¦"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8‡É¾„2
-r
-java:S2095°"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8‡É¾„2
+java:S1444$"0Make this "public static selectedId" field final(Ï­¦õıÿÿÿÿ8¾Áğ†2J$2b8dbb1e-f783-4fd9-8cf9-27b96f0ffad8
+¡	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8‚£‚‡2J$80c8636b-73cb-4939-a7a9-a477274473ce
+‘
+java:S1192†"HDefine a constant instead of duplicating this literal "options" 4 times.(óÙóÊşÿÿÿÿ8‚£‚‡2J$b8518d9b-97a4-440c-8481-9919e95acf6f
+“
+java:S2095Ò"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8„£‚‡2J$3221ff67-2103-469e-b59b-f2374d3aebe2
+˜
+java:S2095º"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ô˜¡×üÿÿÿÿ8„£‚‡2J$2d9c87ed-b0bf-4143-8e99-268f9123558e
+˜
+java:S2095°"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ç¬‡‹ıÿÿÿÿ8ƒ£‚‡2J$fd2052a2-662e-4e37-80d2-ffa90731fd03
 ’
-java:S2095-"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8§É©„2J$c8e03bd0-684b-4c34-983f-25c66c1208aa
-m
-java:S2095È"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÖØùÊ8‰É¾„2
-r
-java:S2095ÿ"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(óÒ†áùÿÿÿÿ8ŠÉ¾„2
-m
-java:S2095ô"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(‰¬Ï©8ŠÉ¾„2
-g
-java:S6905 "Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8æÉ©„2J$f6b05ac0-528b-481c-9d40-7745da40b4f7
-o
-java:S3776v"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(ğ™ºâ8—É¾„2
-a
-java:S1854"CRemove this useless assignment to local variable "bookStatusFound".(÷§Ü›8—É¾„2
-W
-java:S1481š"4Remove this unused "bookStatusFound" local variable.(ßÌªøşÿÿÿÿ8šÉ¾„2
-b
-java:S6905"Don't use the query "SELECT *".(èº˜Õ8öÉ©„2J$c8a3f014-2fbe-4b8e-a3c4-f7fcc51326f4
+java:S20957"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(÷¼³8ÀÁğ†2J$b336ecdf-1a69-4400-9d7b-c0758247092a
+˜
+java:S2095‰"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(óÒ†áùÿÿÿÿ8…£‚‡2J$1767bed1-b79c-41a7-b226-7b84fac50511
+“
+java:S2095ş"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(‰¬Ï©8ƒ£‚‡2J$0584a17c-0f6f-4c01-b0a1-517fc815296c
+˜
+java:S2095€"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(ÉÄúéüÿÿÿÿ8„£‚‡2J$fbd14b6e-8802-4cdb-9a8e-97779480c7f1
 u
-java:S3776İ"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(†×ï„ıÿÿÿÿ8¥É¾„2
-Z
-java:S6909ú"<Move this loop-invariant setter invocation out of this loop.(ïÖ‡8¦É¾„2
-a
-java:S1854Ÿ"CRemove this useless assignment to local variable "bookStatusFound".(÷§Ü›8¬É¾„2
-W
-java:S1481›"4Remove this unused "bookStatusFound" local variable.(ßÌªøşÿÿÿÿ8®É¾„2
-T
-java:S6437¼"6Revoke and change this password, as it is compromised.(¥‹™ı8²É¾„2
+java:S1135"2Complete the task associated to this TODO comment.(–±çœ8ÃÁğ†2J$8d7ed4e3-5679-40d8-a864-c34fcd6fdeda
+g
+java:S6905*"Don't use the query "SELECT *".(Â¥ã’üÿÿÿÿ8ÃÁğ†2J$1b82aae1-8330-4625-812c-a9ca05a373be
+–
+java:S3776€"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(ğ™ºâ8—£‚‡2J$a5c07807-b953-4ff1-8d9a-d672d0f16642
+‡
+java:S1854¨"CRemove this useless assignment to local variable "bookStatusFound".(÷§Ü›8—£‚‡2J$848ca825-ef20-41bb-b2a0-9404e3d87908
+}
+java:S1481¤"4Remove this unused "bookStatusFound" local variable.(ßÌªøşÿÿÿÿ8›£‚‡2J$e560748f-6eb3-4f5a-8d60-f802ad43a4cb
+b
+java:S6905)"Don't use the query "SELECT *".(èº˜Õ8ÓÁğ†2J$cc6364b7-f71c-4252-82f4-4b1a4af02c41
+›
+java:S3776ç"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(†×ï„ıÿÿÿÿ8¡£‚‡2J$38a97eab-7d4d-4fe4-ae4d-2bd08af5044d
+€
+java:S6909„"<Move this loop-invariant setter invocation out of this loop.(ïÖ‡8¢£‚‡2J$0cc9a952-59a7-4676-a1f1-fb11ca6028a2
+‡
+java:S1854©"CRemove this useless assignment to local variable "bookStatusFound".(÷§Ü›8¦£‚‡2J$fa334e07-c09b-47ac-a062-530edb245633
+}
+java:S1481¥"4Remove this unused "bookStatusFound" local variable.(ßÌªøşÿÿÿÿ8¨£‚‡2J$86961d35-e98d-496a-95cd-96ca59619e4c
+z
+java:S6437Æ"6Revoke and change this password, as it is compromised.(¥‹™ı8ª£‚‡2J$c9a5a8d8-497e-4e70-bcee-71f2d8cbefa7
