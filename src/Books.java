@@ -32,6 +32,7 @@ public class Books {
     private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
+    private static String filterGenre;
     private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}, {"5", "wishlist"}};
     public static int selectedId;
 
@@ -43,6 +44,7 @@ public class Books {
     public static final String DISABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 0";
     public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
     public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
+    public static final String FILTER_BOOK_GENRE_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND GENRE = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -68,7 +70,7 @@ public class Books {
                 // print all the books
                 System.out.println("------------------------------");
                 System.out.println("Title:  " + selectedBookName);
-                System.out.println("Author: " +  selectedAuthorName);
+                System.out.println("Author: " + selectedAuthorName);
                 System.out.println("Genre:  " + selectedGenre);
                 System.out.println("Status: " + selectedStatus);
             }
@@ -112,6 +114,7 @@ public class Books {
                 addBook(booklistConnection, userId);
                 break;
             case "3": // Filtering for specific book(s)
+                filterBooks(booklistConnection, userId);
                 break;
             case "4": // change status of a book
                 changeStatus(booklistConnection, userId);
@@ -277,61 +280,64 @@ public class Books {
         }
     }
 
-    // this method deletes a book from the DB
-    public static void deleteBook(Connection booklistConnection, int userId) {
-        try {
-            while (true) {
-                System.out.print("Which book do you want to delete?> ");
-                bookName = userInput.nextLine().toLowerCase();
+    public static void filterBooks(Connection booklistConnection, int userID) {
+        }
 
-                System.out.print("What is the name of the author?> ");
-                authorName = userInput.nextLine().toLowerCase();
+        // this method deletes a book from the DB
+        public static void deleteBook (Connection booklistConnection,int userId){
+            try {
+                while (true) {
+                    System.out.print("Which book do you want to delete?> ");
+                    bookName = userInput.nextLine().toLowerCase();
 
-                if (bookName.isEmpty() || authorName.isEmpty()) {
-                    System.out.println("You need to enter both the name of the book and the author!");
-                } else {
-                    boolean bookStatusFound = false;
-                    for (String[] options : bookStatusOptions) {
-                        if (options[0].equals(bookStatus)) {
-                            bookStatus = options[1];
-                            bookStatusFound = true;
-                            break;
+                    System.out.print("What is the name of the author?> ");
+                    authorName = userInput.nextLine().toLowerCase();
+
+                    if (bookName.isEmpty() || authorName.isEmpty()) {
+                        System.out.println("You need to enter both the name of the book and the author!");
+                    } else {
+                        boolean bookStatusFound = false;
+                        for (String[] options : bookStatusOptions) {
+                            if (options[0].equals(bookStatus)) {
+                                bookStatus = options[1];
+                                bookStatusFound = true;
+                                break;
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
-            }
-            PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(DELETE_BOOK_QUERY);
-            deleteBookStatement.setInt(1, userId);
-            deleteBookStatement.setString(2, bookName);
-            deleteBookStatement.setString(3, authorName);
-            int rowsAffected = deleteBookStatement.executeUpdate();
+                PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(DELETE_BOOK_QUERY);
+                deleteBookStatement.setInt(1, userId);
+                deleteBookStatement.setString(2, bookName);
+                deleteBookStatement.setString(3, authorName);
+                int rowsAffected = deleteBookStatement.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Book was successfully deleted!");
-                System.out.println("");
-                userOptions(booklistConnection, userId);
-            } else {
-                System.out.println("Book is not in your Booklist.");
-                userOptions(booklistConnection, userId);
+                if (rowsAffected > 0) {
+                    System.out.println("Book was successfully deleted!");
+                    System.out.println("");
+                    userOptions(booklistConnection, userId);
+                } else {
+                    System.out.println("Book is not in your Booklist.");
+                    userOptions(booklistConnection, userId);
+                }
+            } catch (SQLException e) {
+                booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
             }
-        } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
+        }
+
+        public static void main (String[]args){
+            try {
+                // connection to database
+                Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
+
+                // start of the program
+
+                // closing of resources
+                booklistConnection.close();
+
+            } catch (SQLException e) {
+                booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
+            }
         }
     }
-
-    public static void main(String[] args) {
-        try {
-            // connection to database
-            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
-
-            // start of the program
-
-            // closing of resources
-            booklistConnection.close();
-
-        } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
-        }
-    }
-}
