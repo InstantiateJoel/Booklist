@@ -4,12 +4,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- Todo:
- 1. Debug (or write unit test)
- 2. Probably GUI
-
  Coding Ideas:
- Make a method, that gets all the user input for the books (name, author...) so theres basically only the methods left,
+ Make a method, that gets all the user input for the books (name, author...) so there´s basically only the methods left,
  that make the sql parts.
  */
 
@@ -197,7 +193,6 @@ public class Books {
         }
         return false;
     }
-
 
     // this method inserts a new book in the DB
     public static void insertIntoBooks(Connection booklistConnection, int userId) {

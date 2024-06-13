@@ -1,13 +1,0 @@
-
-Ä
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ş«ì›8Õéÿ1J$b0369daa-96ca-4414-9e54-1606c350601d
-}
-java:S1854
-":Remove this useless assignment to local variable "userId".(îµ§Á8¡Ëéÿ1J$6ff4aa95-89f1-4cc1-a463-a44ab5e5cefb
-Š
-java:S1854"BRemove this useless assignment to local variable "mockConnection".(í…¦ğûÿÿÿÿ8¡Ëéÿ1J$ce958ce8-19f7-486f-808e-4a4a73085c29
-{
-java:S1481"3Remove this unused "mockConnection" local variable.(í…¦ğûÿÿÿÿ8¦Ëéÿ1J$ba83f1a3-c7d8-4692-8fbf-80f32e32d43e
-n
-java:S1481
-"+Remove this unused "userId" local variable.(îµ§Á8¦Ëéÿ1J$6ce49761-8078-4f1a-a09e-8ebd9b29595b

@@ -471,8 +471,6 @@ G.idea/sonarlint/issuestore/e/8/e8e85c6130198fbaebc58789aa9ec63c66fe5eca,0\b\0b
 Q.idea/sonarlint/securityhotspotstore/5/8/5892723ed0ca0f4483bcdfcddd44bb5e3def9f98,6\d\6d4073d32fe303116d2cde1530100184eee11f41
 Å
 Q.idea/sonarlint/securityhotspotstore/e/8/e8e85c6130198fbaebc58789aa9ec63c66fe5eca,0\4\04fb13b7aa77abaa0335e774b663324ef48c6591
-I
-src/UnitTestBooklist.java,f\5\f523acacb1fcf23e2e9f00e122181b110690b444
 Å
 Q.idea/sonarlint/securityhotspotstore/2/1/21ee5723af54b9f7fb0ab89f441ce05645a325e3,0\2\02cc7e059a9edd7871ec242b8d2a46ce7163c679
 Å
@@ -1279,8 +1277,6 @@ Q.idea/sonarlint/securityhotspotstore/f/d/fd37f2677479536181c0612f842d884ab52652
 Q.idea/sonarlint/securityhotspotstore/f/d/fda364d1965f1d6ad24d85080dafd72914a3ea1b,6\b\6b50f7ee62d468445a9be1337538c27e34af2fb5
 Å
 Q.idea/sonarlint/securityhotspotstore/f/5/f5132802d075a289da6022fa70a6ef4e9d8213f9,4\a\4a66e3fef98a85ae2b83ccf61096f356d9ba1e37
-Å
-Q.idea/sonarlint/securityhotspotstore/f/5/f523acacb1fcf23e2e9f00e122181b110690b444,9\5\958bce123b52791116df6507e1525f064ff4e537
 Å
 Q.idea/sonarlint/securityhotspotstore/f/6/f6a03986ab222b564400f846f6ca9a39ee70920e,2\f\2f3697bc014ea7bba348db8bac5617a21e36fb35
 Å
