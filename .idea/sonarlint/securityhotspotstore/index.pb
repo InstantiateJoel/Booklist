@@ -592,8 +592,6 @@ G.idea/sonarlint/issuestore/0/a/0a1e90f9d4405dca2d2346ff2a1749216495ddde,e\2\e2
 w
 G.idea/sonarlint/issuestore/8/8/883da5637e03b7935007b907e438c775a18b7a96,2\f\2f04a2aecd91ed1ab6d261c3ab4d21a692ad95d7
 w
-G.idea/sonarlint/issuestore/9/1/91c12f4eabd0f77ad1e45efb30d54ac6d3941eee,7\b\7b4baad446443ecc2865508f120750c60aec939c
-w
 G.idea/sonarlint/issuestore/a/8/a8c9ac94c5f7b1fe5f776d80fe17a8cc710b4f85,7\9\79f8b8eeb5a39cf0d19fe10a0757349f5751d985
 Å
 Q.idea/sonarlint/securityhotspotstore/1/7/174a73bf9a27d8adad55522f3d19bf4268e5e197,1\8\1877a363a4ed19202001aa06f010a77e06f41f78

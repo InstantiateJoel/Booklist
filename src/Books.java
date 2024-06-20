@@ -34,6 +34,7 @@ public class Books {
     private static String selectedAuthorName;
     private static String filterGenre;
     private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}, {"5", "wishlist"}};
+    private static final String[][] filterOptions = {{"1", "Book name"}, {"2", "Author Name"}, {"3", "Genre"}};
     public static int selectedId;
 
     // SQL Queries
@@ -45,6 +46,8 @@ public class Books {
     public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
     public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
     public static final String FILTER_BOOK_GENRE_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND GENRE = ?";
+    public static final String FILTER_BOOK_AUTHOR_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND AUTHOR = ?";
+    public static final String FILTER_BOOK_NAME_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND NAME = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -280,64 +283,95 @@ public class Books {
         }
     }
 
-    public static void filterBooks(Connection booklistConnection, int userID) {
-        }
-
-        // this method deletes a book from the DB
-        public static void deleteBook (Connection booklistConnection,int userId){
-            try {
-                while (true) {
-                    System.out.print("Which book do you want to delete?> ");
-                    bookName = userInput.nextLine().toLowerCase();
-
-                    System.out.print("What is the name of the author?> ");
-                    authorName = userInput.nextLine().toLowerCase();
-
-                    if (bookName.isEmpty() || authorName.isEmpty()) {
-                        System.out.println("You need to enter both the name of the book and the author!");
-                    } else {
-                        boolean bookStatusFound = false;
-                        for (String[] options : bookStatusOptions) {
-                            if (options[0].equals(bookStatus)) {
-                                bookStatus = options[1];
-                                bookStatusFound = true;
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(DELETE_BOOK_QUERY);
-                deleteBookStatement.setInt(1, userId);
-                deleteBookStatement.setString(2, bookName);
-                deleteBookStatement.setString(3, authorName);
-                int rowsAffected = deleteBookStatement.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    System.out.println("Book was successfully deleted!");
-                    System.out.println("");
-                    userOptions(booklistConnection, userId);
+    public static void filterBooks(Connection booklistConnection, int userId) {
+        try {
+            while (true) {
+                System.out.print("Which filter do you want to use? (1, Book name; 2, Author; 3, Genre> "); // todo change that into the input method
+                String filterOptionUser = userInput.nextLine(); // stores the filter option in a var
+                if (filterOptionUser.isEmpty()) {
+                    System.out.println("You need to enter a number from above!");
                 } else {
-                    System.out.println("Book is not in your Booklist.");
-                    userOptions(booklistConnection, userId);
+                    switch (filterOptionUser) {
+                        case "1":
+                            System.out.print("Which Book name do you want to filter?> ");
+                            bookName = userInput.nextLine();
+                            if (bookName.isEmpty()) {
+                                System.out.println("You need to enter the name!");
+                            } else {
+                                PreparedStatement filterBookNameStatement = booklistConnection.prepareStatement(FILTER_BOOK_NAME_QUERY);
+                                filterBookNameStatement.setInt(1, userId);
+                                filterBookNameStatement.setString(2, bookName);
+                                /*
+                                todo:
+                                add the resultset int counter, print the thing
+                                finish the whole thing
+                                 */
+                            }
+                    }
+                    break;
                 }
-            } catch (SQLException e) {
-                booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
+
             }
-        }
-
-        public static void main (String[]args){
-            try {
-                // connection to database
-                Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
-
-                // start of the program
-
-                // closing of resources
-                booklistConnection.close();
-
-            } catch (SQLException e) {
-                booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
-            }
+        } catch (SQLException e) {
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred while trying to filter for books");
         }
     }
+
+    // this method deletes a book from the DB
+    public static void deleteBook(Connection booklistConnection, int userId) {
+        try {
+            while (true) {
+                System.out.print("Which book do you want to delete?> ");
+                bookName = userInput.nextLine().toLowerCase();
+
+                System.out.print("What is the name of the author?> ");
+                authorName = userInput.nextLine().toLowerCase();
+
+                if (bookName.isEmpty() || authorName.isEmpty()) {
+                    System.out.println("You need to enter both the name of the book and the author!");
+                } else {
+                    boolean bookStatusFound = false;
+                    for (String[] options : bookStatusOptions) {
+                        if (options[0].equals(bookStatus)) {
+                            bookStatus = options[1];
+                            bookStatusFound = true;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            PreparedStatement deleteBookStatement = booklistConnection.prepareStatement(DELETE_BOOK_QUERY);
+            deleteBookStatement.setInt(1, userId);
+            deleteBookStatement.setString(2, bookName);
+            deleteBookStatement.setString(3, authorName);
+            int rowsAffected = deleteBookStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Book was successfully deleted!");
+                System.out.println("");
+                userOptions(booklistConnection, userId);
+            } else {
+                System.out.println("Book is not in your Booklist.");
+                userOptions(booklistConnection, userId);
+            }
+        } catch (SQLException e) {
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            // connection to database
+            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
+
+            // start of the program
+
+            // closing of resources
+            booklistConnection.close();
+
+        } catch (SQLException e) {
+            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);
+        }
+    }
+}
