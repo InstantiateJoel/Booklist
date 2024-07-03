@@ -1,4 +1,4 @@
-import java.sql.Connection;
+/*import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;// changes the status of a book
@@ -50,3 +50,4 @@ public static void changeStatus(Connection booklistConnection, int userId) {
         booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while changing the status of a book.");
     }
 }
+*/

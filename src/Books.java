@@ -11,10 +11,9 @@ import java.util.logging.Logger;
 
 /*
 todo:
-1. when printing books, and no books are existent, print no books yet or some
-2. Status can only be one of the numbers
-3. add exit, to exit and log out of the book list
-4. change the status to "review" 1 for 1 star, 2 for 2 stars and so on. Save that to the db with "*"
+1. when printing books, and no books are existent, print no books yet or some (done)
+2. add exit, to exit and log out of the book list
+3. change the status to "review" 1 for 1 star, 2 for 2 stars and so on. Save that to the db with "*"
  */
 
 
@@ -57,19 +56,24 @@ public class Books {
 
             System.out.println("===========BOOKLIST===========");
             System.out.println("These are your books:");
-            while (selectAllBooksResult.next()) {
-                selectedId = selectAllBooksResult.getInt("USER_ID");
-                selectedBookName = selectAllBooksResult.getString("NAME");
-                selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
-                selectedGenre = selectAllBooksResult.getString("GENRE");
-                selectedStatus = selectAllBooksResult.getString("STATUS");
 
-                // print all the books
-                System.out.println("------------------------------");
-                System.out.println("Title:  " + selectedBookName);
-                System.out.println("Author: " + selectedAuthorName);
-                System.out.println("Genre:  " + selectedGenre);
-                System.out.println("Status: " + selectedStatus);
+            if (selectAllBooksResult.next()) {
+                while (selectAllBooksResult.next()) {
+                    selectedId = selectAllBooksResult.getInt("USER_ID");
+                    selectedBookName = selectAllBooksResult.getString("NAME");
+                    selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
+                    selectedGenre = selectAllBooksResult.getString("GENRE");
+                    selectedStatus = selectAllBooksResult.getString("STATUS");
+
+                    // print all the books
+                    System.out.println("------------------------------");
+                    System.out.println("Title:  " + selectedBookName);
+                    System.out.println("Author: " + selectedAuthorName);
+                    System.out.println("Genre:  " + selectedGenre);
+                    System.out.println("Status: " + selectedStatus);
+                }
+                } else {
+                System.out.println("No books where found yet.");
             }
             System.out.println("------------------------------");
             userOptions(booklistConnection, userId);
@@ -88,6 +92,7 @@ public class Books {
                  \
                 3: Filter books
                  \
+                4: Exit
                 Enter number>""");
         // used to check which case from switch should be used
         String userChoice;
