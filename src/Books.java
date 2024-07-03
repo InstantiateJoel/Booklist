@@ -11,17 +11,12 @@ import java.util.logging.Logger;
 
 /*
 todo:
-1. Add filtering for books
-2. when printing books, and no books are existent, print no books yet or some
-3. Status can only be one of the numbers
-4. add options somewhere?
-5. add exit, to exit and log out of the book list
+1. when printing books, and no books are existent, print no books yet or some
+2. Status can only be one of the numbers
+3. add exit, to exit and log out of the book list
+4. change the status to "review" 1 for 1 star, 2 for 2 stars and so on. Save that to the db with "*"
  */
 
-/*
-todo filter:
-finish the filter, make them work, select the books like in print all books
- */
 
 public class Books {
     // Scanner initialization
@@ -37,7 +32,6 @@ public class Books {
     private static String selectedBookName;
     private static String selectedAuthorName;
     private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}, {"5", "wishlist"}};
-    private static final String[][] filterOptions = {{"1", "Book name"}, {"2", "Author Name"}, {"3", "Genre"}};
     public static int selectedId;
 
     // SQL Queries
@@ -48,9 +42,6 @@ public class Books {
     public static final String DISABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 0";
     public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
     public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
-    public static final String FILTER_BOOK_GENRE_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND GENRE = ?";
-    public static final String FILTER_BOOK_AUTHOR_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND AUTHOR = ?";
-    public static final String FILTER_BOOK_NAME_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ? AND NAME = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
@@ -97,10 +88,6 @@ public class Books {
                  \
                 3: Filter books
                  \
-                4: Change status of a book
-                 \
-                5: Delete book
-                 \
                 Enter number>""");
         // used to check which case from switch should be used
         String userChoice;
@@ -119,13 +106,7 @@ public class Books {
             case "2": // add a book
                 addBook(booklistConnection, userId);
                 break;
-            case "3": // Filtering for specific book(s)
-                filterBooks(booklistConnection, userId);
-                break;
-            case "4": // change status of a book
-                changeStatus(booklistConnection, userId);
-                break;
-            case "5": // delete a book
+            case "3": // delete a book
                 deleteBook(booklistConnection, userId);
                 break;
             default:
@@ -234,124 +215,6 @@ public class Books {
         } catch (SQLException e) {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while inserting book.", e);
         }
-    }
-
-    // changes the status of a book
-    public static void changeStatus(Connection booklistConnection, int userId) {
-        try {
-            while (true) {
-                System.out.println("Please enter the following information about the book you want to change the status:");
-                System.out.print("Name> ");
-                bookName = userInput.nextLine();
-                System.out.print("Author> ");
-                authorName = userInput.nextLine();
-                System.out.print("Status> ");
-                bookStatus = userInput.nextLine();
-
-                if (bookName.isEmpty() || authorName.isEmpty() || bookStatus.isEmpty()) {
-                    System.out.println("You need to enter the name of the book and the author name!");
-                } else {
-                    boolean statusFound = false;
-                    for (String[] options : bookStatusOptions) {
-                        if (options[0].equals(bookStatus)) {
-                            bookStatus = options[1];
-                            statusFound = true;
-                            break;
-                        }
-                    }
-                    if (statusFound) {
-                        PreparedStatement disableSafeUpdateStatement = booklistConnection.prepareStatement(DISABLE_SAFE_UPDATES_QUERY);
-                        disableSafeUpdateStatement.executeUpdate();
-                        PreparedStatement changeBookStatusStatement = booklistConnection.prepareStatement(CHANGE_BOOK_STATUS_QUERY);
-                        changeBookStatusStatement.setString(1, bookStatus);
-                        changeBookStatusStatement.setString(2, bookName);
-                        changeBookStatusStatement.setString(3, authorName);
-                        changeBookStatusStatement.setInt(4, userId);
-
-                        int rowsAffected = changeBookStatusStatement.executeUpdate();
-                        if (rowsAffected > 0) {
-                            System.out.println("Status of the book " + bookName + " changed to " + bookStatus + ".");
-                            PreparedStatement enableSafeUpdateStatement = booklistConnection.prepareStatement(ENABLE_SAFE_UPDATES_QUERY);
-                            enableSafeUpdateStatement.executeUpdate();
-                            userOptions(booklistConnection, userId);
-                            break;
-                        } else {
-                            System.out.println("Error occurred. Please try again.");
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while changing the status of a book.");
-        }
-    }
-
-    public static void filterBooks(Connection booklistConnection, int userId) {
-        while (true) {
-            System.out.print("Which filter do you want to use? (1, Book name; 2, Author; 3, FfGenre> "); // todo change that into the input method
-            String filterOptionUser = userInput.nextLine(); // stores the filter option in a var
-            if (filterOptionUser.isEmpty()) {
-                System.out.println("You need to enter a number from above!");
-            } else {
-                switch (filterOptionUser) {
-                    case "1":
-                        while (true) {
-                            System.out.print("What is the name you want to filter for> ");
-                            bookName = userInput.nextLine();
-                            if (bookName.isEmpty()) {
-                                System.out.println("You need to enter a name.");
-                            } else {
-                                filterBookName(booklistConnection, userId);
-                                break;
-                            }
-                        }
-                        break;
-                    case "2":
-                        // go to filter author name
-                        while (true) {
-                            System.out.print("What is the author name, you want to filter for?> ");
-                            authorName = userInput.nextLine();
-                            if (authorName.isEmpty()) {
-                                System.out.println("You need to enter the author name.");
-                            } else {
-                                filterBookAuthor(booklistConnection, userId);
-                                break;
-                            }
-                        }
-                        break;
-                    case "3":
-                        // go to filter genre
-                        while (true){
-                            System.out.print("What is the genre you want to filter for?> ");
-                            bookGenre = userInput.nextLine();
-                            if (bookGenre.isEmpty()) {
-                                System.out.println("You need to enter the genre you want to filter for.");
-                            } else {
-                                filterBookGenre(booklistConnection, userId);
-                                break;
-                            }
-                        }
-                        break;
-                    default:
-                        System.out.println("You need to enter one of the numbers above!");
-                }
-                break;
-            }
-
-        }
-    }
-
-    // filters for the book name
-    public static void filterBookName(Connection booklistConnection, int userId) {
-        // make that shit work
-    }
-
-    public static void filterBookAuthor(Connection booklistConnection, int userId) {
-        // make that shit work
-    }
-
-    public static void filterBookGenre (Connection booklistConnection, int userId) {
-        // make that shit work
     }
 
     // this method deletes a book from the DB
