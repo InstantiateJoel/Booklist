@@ -15,6 +15,7 @@ todo:
 2. add exit, to exit and log out of the book list
 3. Make a method, that gets all the user input for the books (name, author...) so there´s basically only the methods left,
  that make the sql parts.
+4. Debug, make sure everything works! After that, start with GUI
  */
 
 
