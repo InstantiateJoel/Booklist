@@ -13,9 +13,8 @@ import java.util.logging.Logger;
 todo:
 1. when printing books, and no books are existent, print no books yet or some (done)
 2. add exit, to exit and log out of the book list
-3. change the status to "review" 1 for 1 star, 2 for 2 stars and so on. Save that to the db with "*"
-    todo: either delete the rating, or finish it (in delete method, I need to do some work, so that it finds the book
-    correctly and prolly change the Queries)
+3. Make a method, that gets all the user input for the books (name, author...) so there´s basically only the methods left,
+ that make the sql parts.
  */
 
 
@@ -29,26 +28,20 @@ public class Books {
     private static String bookName = "";
     private static String authorName;
     private static String bookGenre;
-    private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
-    private static final String[][] bookRating = {{"1", "*"}, {"2", "**"}, {"3", "***"}, {"4", "****"}, {"5", "*****"}};
     public static int selectedId;
 
     // SQL Queries
-    public static final String INSERT_INTO_BOOKS_QUERY = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE, STATUS) VALUES (?, ?, ?, ?, ?)";
+    public static final String INSERT_INTO_BOOKS_QUERY = "INSERT INTO BOOKS (USER_ID, NAME, AUTHOR, GENRE) VALUES (?, ?, ?, ?)";
     public static final String DELETE_BOOK_QUERY = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
     public static final String CHECK_BOOK_EXISTS_QUERY = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
     public static final String SELECT_ALL_BOOKS_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ?";
-    public static final String DISABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 0";
-    public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
-    public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
 
     /*
      Method below is used to read the user input, check which one and then go to the method, that executes it
      */
     public static void printAllBooks(Connection booklistConnection, int userId) {
-        String selectedStatus;
         String selectedGenre;
         try {
             // preparing sql statements
@@ -65,14 +58,11 @@ public class Books {
                     selectedBookName = selectAllBooksResult.getString("NAME");
                     selectedAuthorName = selectAllBooksResult.getString("AUTHOR");
                     selectedGenre = selectAllBooksResult.getString("GENRE");
-                    selectedStatus = selectAllBooksResult.getString("STATUS");
-
                     // print all the books
                     System.out.println("------------------------------");
                     System.out.println("Title:  " + selectedBookName);
                     System.out.println("Author: " + selectedAuthorName);
                     System.out.println("Genre:  " + selectedGenre);
-                    System.out.println("Status: " + selectedStatus);
                 }
                 } else {
                 System.out.println("No books where found yet.");
@@ -92,7 +82,7 @@ public class Books {
                  \
                 2: Add a book
                  \
-                3: Filter books
+                3: Delete a book
                  \
                 4: Exit
                 Enter number>""");
@@ -116,10 +106,16 @@ public class Books {
             case "3": // delete a book
                 deleteBook(booklistConnection, userId);
                 break;
+            case "4":
+                System.exit(69);
+                break;
             default:
                 System.out.println("Unexpected error!");
         }
     }
+
+    // add the user inputs method here, that gets all the user inputs for the books, to just simply ask
+    // everything needed
 
     // insert book, asks about the book
     public static void addBook(Connection booklistConnection, int userId) {
@@ -148,24 +144,6 @@ public class Books {
             } else if (bookGenre.equals("options")) {
                 userOptions(booklistConnection, userId);
                 break;
-            }
-
-            System.out.print("Enter the name of the status: ");
-            bookStatus = userInput.nextLine();
-            if (bookStatus.isEmpty()) {
-                System.out.println("The status of the book is required!");
-            } else if (bookStatus.equals("options")) {
-                userOptions(booklistConnection, userId);
-                break;
-            } else {
-                boolean bookStatusFound = false;
-                for (String[] options : bookRating) {
-                    if (options[0].equals(bookStatus)) {
-                        bookStatus = options[1];
-                        bookStatusFound = true;
-                        break;
-                    }
-                }
             }
             if (!checkBookExist(booklistConnection, userId)) {
                 insertIntoBooks(booklistConnection, userId);
@@ -209,7 +187,6 @@ public class Books {
             insertBooksStatement.setString(2, bookName);
             insertBooksStatement.setString(3, authorName);
             insertBooksStatement.setString(4, bookGenre);
-            insertBooksStatement.setString(5, bookStatus);
             int rowsAffected = insertBooksStatement.executeUpdate();
 
             // when the rows are not created, the user is prompted to try again
@@ -236,15 +213,6 @@ public class Books {
 
                 if (bookName.isEmpty() || authorName.isEmpty()) {
                     System.out.println("You need to enter both the name of the book and the author!");
-                } else {
-                    boolean bookStatusFound = false;
-                    for (String[] options : bookRating) {
-                        if (options[0].equals(bookStatus)) {
-                            bookStatus = options[1];
-                            bookStatusFound = true;
-                            break;
-                        }
-                    }
                     break;
                 }
             }
@@ -256,7 +224,7 @@ public class Books {
 
             if (rowsAffected > 0) {
                 System.out.println("Book was successfully deleted!");
-                System.out.println("");
+                System.out.println(" ");
                 userOptions(booklistConnection, userId);
             } else {
                 System.out.println("Book is not in your Book-list.");
@@ -270,12 +238,13 @@ public class Books {
     public static void main(String[] args) {
         try {
             // connection to database
-            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
-
-            // start of the program
+            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist",
+                    "root",
+                    "Tzz$dJG+YccV^HQs");
 
             // closing of resources
             booklistConnection.close();
+            userInput.close();
 
         } catch (SQLException e) {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while connecting to database", e);

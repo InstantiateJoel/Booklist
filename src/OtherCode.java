@@ -51,3 +51,13 @@ public static void changeStatus(Connection booklistConnection, int userId) {
     }
 }
 */
+
+/*
+Queries:
+
+    public static final String DISABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 0";
+    public static final String ENABLE_SAFE_UPDATES_QUERY = "SET SESSION sql_safe_updates = 1";
+    public static final String CHANGE_BOOK_STATUS_QUERY = "UPDATE books SET STATUS = ? WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
+ */
+
+// private static final String[][] bookRating = {{"1", "*"}, {"2", "**"}, {"3", "***"}, {"4", "****"}, {"5", "*****"}};
