@@ -14,6 +14,8 @@ todo:
 1. when printing books, and no books are existent, print no books yet or some (done)
 2. add exit, to exit and log out of the book list
 3. change the status to "review" 1 for 1 star, 2 for 2 stars and so on. Save that to the db with "*"
+    todo: either delete the rating, or finish it (in delete method, I need to do some work, so that it finds the book
+    correctly and prolly change the Queries)
  */
 
 
@@ -30,7 +32,7 @@ public class Books {
     private static String bookStatus; // used to get the input and safe it for the DB
     private static String selectedBookName;
     private static String selectedAuthorName;
-    private static final String[][] bookStatusOptions = {{"1", "ordered"}, {"2", "shelf"}, {"3", "read"}, {"4", "lend"}, {"5", "wishlist"}};
+    private static final String[][] bookRating = {{"1", "*"}, {"2", "**"}, {"3", "***"}, {"4", "****"}, {"5", "*****"}};
     public static int selectedId;
 
     // SQL Queries
@@ -157,7 +159,7 @@ public class Books {
                 break;
             } else {
                 boolean bookStatusFound = false;
-                for (String[] options : bookStatusOptions) {
+                for (String[] options : bookRating) {
                     if (options[0].equals(bookStatus)) {
                         bookStatus = options[1];
                         bookStatusFound = true;
@@ -236,7 +238,7 @@ public class Books {
                     System.out.println("You need to enter both the name of the book and the author!");
                 } else {
                     boolean bookStatusFound = false;
-                    for (String[] options : bookStatusOptions) {
+                    for (String[] options : bookRating) {
                         if (options[0].equals(bookStatus)) {
                             bookStatus = options[1];
                             bookStatusFound = true;
