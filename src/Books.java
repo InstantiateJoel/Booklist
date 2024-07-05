@@ -54,7 +54,7 @@ public class Books {
             selectAllBooksStatement.setInt(1, userId);
             ResultSet selectAllBooksResult = selectAllBooksStatement.executeQuery();
 
-            System.out.println("===========BOOKLIST===========");
+            System.out.println("===========BOOK-LIST===========");
             System.out.println("These are your books:");
 
             if (selectAllBooksResult.next()) {
@@ -257,7 +257,7 @@ public class Books {
                 System.out.println("");
                 userOptions(booklistConnection, userId);
             } else {
-                System.out.println("Book is not in your Booklist.");
+                System.out.println("Book is not in your Book-list.");
                 userOptions(booklistConnection, userId);
             }
         } catch (SQLException e) {
