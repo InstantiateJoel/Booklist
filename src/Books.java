@@ -15,7 +15,14 @@ todo:
 2. add exit, to exit and log out of the book list
 3. Make a method, that gets all the user input for the books (name, author...) so there´s basically only the methods left,
  that make the sql parts.
+4. Delete not working? WHY? I have no clue!
 4. Debug, make sure everything works! After that, start with GUI
+ */
+
+/*
+ I have no clue, why this is not working out!!!???? something to do with the methods for sure, they are in the wrong
+ positions.
+ I changed everything to before, so it works and I can start again and work that out with the userInputs method
  */
 
 
@@ -39,9 +46,6 @@ public class Books {
     public static final String CHECK_BOOK_EXISTS_QUERY = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
     public static final String SELECT_ALL_BOOKS_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ?";
 
-    /*
-     Method below is used to read the user input, check which one and then go to the method, that executes it
-     */
     public static void printAllBooks(Connection booklistConnection, int userId) {
         String selectedGenre;
         try {
@@ -51,9 +55,9 @@ public class Books {
             ResultSet selectAllBooksResult = selectAllBooksStatement.executeQuery();
 
             System.out.println("===========BOOK-LIST===========");
-            System.out.println("These are your books:");
 
             if (selectAllBooksResult.next()) {
+                System.out.println("These are your books:");
                 while (selectAllBooksResult.next()) {
                     selectedId = selectAllBooksResult.getInt("USER_ID");
                     selectedBookName = selectAllBooksResult.getString("NAME");
@@ -96,13 +100,15 @@ public class Books {
             } else {
                 break;
             }
+            return;
         }
+
         switch (userChoice) {
             case "1": // print all books
                 printAllBooks(booklistConnection, userId);
                 break;
             case "2": // add a book
-                addBook(booklistConnection, userId);
+                userInputs(booklistConnection, userId);
                 break;
             case "3": // delete a book
                 deleteBook(booklistConnection, userId);
@@ -115,11 +121,8 @@ public class Books {
         }
     }
 
-    // add the user inputs method here, that gets all the user inputs for the books, to just simply ask
-    // everything needed
-
-    // insert book, asks about the book
-    public static void addBook(Connection booklistConnection, int userId) {
+    // Method below is used to read the user input, check which one and then go to the method, that executes it
+    public static void userInputs(Connection booklistConnection, int userId) {
         while (true) {
             System.out.print("Enter the name of the book> ");
             bookName = userInput.nextLine();
@@ -138,7 +141,7 @@ public class Books {
                 userOptions(booklistConnection, userId);
                 break;
             }
-            System.out.print("Enter the genre of the book. If you don´t want to add it, please proceed with 'enter'> ");
+            System.out.print("Enter the genre of the book. If you don´t know it, please proceed with 'enter'> ");
             bookGenre = userInput.nextLine();
             if (bookGenre.isEmpty()) {
                 bookGenre = "Not defined";
@@ -146,6 +149,14 @@ public class Books {
                 userOptions(booklistConnection, userId);
                 break;
             }
+            checkBookExist(booklistConnection, userId);
+            break;
+        }
+    }
+
+    // insert book, asks about the book
+    public static void addBook(Connection booklistConnection, int userId) {
+       while (true) {
             if (!checkBookExist(booklistConnection, userId)) {
                 insertIntoBooks(booklistConnection, userId);
                 break;
@@ -171,6 +182,7 @@ public class Books {
                 selectedAuthorName = checkBookExistResult.getString("AUTHOR");
 
                 if (selectedBookName.equalsIgnoreCase(bookName) && selectedAuthorName.equalsIgnoreCase(authorName)) {
+                    addBook(booklistConnection, userId);
                     return true;
                 }
             }
@@ -203,7 +215,7 @@ public class Books {
     }
 
     // this method deletes a book from the DB
-    public static void deleteBook(Connection booklistConnection, int userId) {
+    public static void deleteBook(Connection booklistConnection, int userId, String performAction) {
         try {
             while (true) {
                 System.out.print("Which book do you want to delete?> ");
