@@ -215,7 +215,7 @@ public class Books {
     }
 
     // this method deletes a book from the DB
-    public static void deleteBook(Connection booklistConnection, int userId, String performAction) {
+    public static void deleteBook(Connection booklistConnection, int userId) {
         try {
             while (true) {
                 System.out.print("Which book do you want to delete?> ");
