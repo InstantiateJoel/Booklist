@@ -4,16 +4,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /*
- I don´t know what is not working anymore. I have no clue. Everything seems to work, then it is not working.
- Just make a Debug branch, implement the last features to make it work and leave it how it is
- */
-
-/*
 todo:
-2. add exit, to exit and log out of the book list
-4. Debug, make sure everything works! After that, start with GUI
+1. Debug, make sure everything works! After that, start with GUI
+1.1 Debug: Print all books not working correctly (it is missing no books found)
  */
-
 
 public class Books {
     // Scanner initialization
@@ -66,13 +60,13 @@ public class Books {
     public static void userOptions(Connection booklistConnection, int userId) {
         System.out.print("""
                 Please choose from the following options:
-                 \
+                \
                 Print: Print all books
-                 \
+                \
                 Add: Add a book
-                 \
+                \
                 Delete: Delete a book
-                 \
+                \
                 Exit: Exit and log out of the program
                 Enter option>""");
         // used to check which case from switch should be used
@@ -85,23 +79,24 @@ public class Books {
                 break;
             }
         }
-        switch (userChoice) {
-            case "print": // print all books
-                printAllBooks(booklistConnection, userId);
-                break;
-            case "add": // add a book
-                addBook(booklistConnection, userId);
-                break;
-            case "delete": // delete a book
-                deleteBook(booklistConnection, userId);
-                break;
-            case "exit":
-                System.out.println("You are logged out successfully.");
-                System.exit(69);
-                break;
-            default:
-                System.out.println("Unexpected error!");
-        }
+            switch (userChoice) {
+                case "print": // print all books
+                    printAllBooks(booklistConnection, userId);
+                    break;
+                case "add": // add a book
+                    addBook(booklistConnection, userId);
+                    break;
+                case "delete": // delete a book
+                    deleteBook(booklistConnection, userId);
+                    break;
+                case "exit":
+                    System.out.println("You are logged out successfully.");
+                    System.exit(69);
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+                    userOptions(booklistConnection, userId);
+            }
     }
 
     public static void addBook(Connection booklistConnection, int userId) {
