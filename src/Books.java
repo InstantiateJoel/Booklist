@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 /*
 todo:
 1. Debug, make sure everything works! After that, start with GUI
-1.1 Debug: Print all books not working correctly (it is missing no books found)
  */
 
 public class Books {
@@ -26,7 +25,7 @@ public class Books {
     public static final String DELETE_BOOK_QUERY = "DELETE FROM BOOKS WHERE USER_ID = ? AND NAME = ? AND AUTHOR = ?";
     public static final String CHECK_BOOK_EXISTS_QUERY = "SELECT * FROM BOOKS WHERE NAME = ? AND AUTHOR = ? AND USER_ID = ?";
     public static final String SELECT_ALL_BOOKS_QUERY = "SELECT * FROM BOOKS WHERE USER_ID = ?";
-    
+
     public static void printAllBooks(Connection booklistConnection, int userId) {
         String selectedGenre;
         try {
@@ -35,8 +34,8 @@ public class Books {
             selectAllBooksStatement.setInt(1, userId);
             ResultSet selectAllBooksResult = selectAllBooksStatement.executeQuery();
             System.out.println("===========BOOK-LIST===========");
-            System.out.println("These are your books:");
             if (selectAllBooksResult.next()) {
+                System.out.println("These are your books:");
                 while (selectAllBooksResult.next()) {
                     selectedId = selectAllBooksResult.getInt("USER_ID");
                     selectedBookName = selectAllBooksResult.getString("NAME");
@@ -48,8 +47,6 @@ public class Books {
                     System.out.println("Author: " + selectedAuthorName);
                     System.out.println("Genre:  " + selectedGenre);
                 }
-            } else {
-                System.out.println("No books where found yet.");
             }
             System.out.println("------------------------------");
             userOptions(booklistConnection, userId);
@@ -57,6 +54,7 @@ public class Books {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while fetching books", e);
         }
     }
+
     public static void userOptions(Connection booklistConnection, int userId) {
         System.out.print("""
                 Please choose from the following options:
@@ -79,24 +77,24 @@ public class Books {
                 break;
             }
         }
-            switch (userChoice) {
-                case "print": // print all books
-                    printAllBooks(booklistConnection, userId);
-                    break;
-                case "add": // add a book
-                    addBook(booklistConnection, userId);
-                    break;
-                case "delete": // delete a book
-                    deleteBook(booklistConnection, userId);
-                    break;
-                case "exit":
-                    System.out.println("You are logged out successfully.");
-                    System.exit(69);
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-                    userOptions(booklistConnection, userId);
-            }
+        switch (userChoice) {
+            case "print": // print all books
+                printAllBooks(booklistConnection, userId);
+                break;
+            case "add": // add a book
+                addBook(booklistConnection, userId);
+                break;
+            case "delete": // delete a book
+                deleteBook(booklistConnection, userId);
+                break;
+            case "exit":
+                System.out.println("You are logged out successfully.");
+                System.exit(69);
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                userOptions(booklistConnection, userId);
+        }
     }
 
     public static void addBook(Connection booklistConnection, int userId) {
@@ -105,7 +103,7 @@ public class Books {
             bookName = userInput.nextLine();
             if (bookName.isEmpty()) {
                 System.out.println("The name of the book is required!");
-            }  else if (bookName.equalsIgnoreCase("exit")) {
+            } else if (bookName.equalsIgnoreCase("exit")) {
                 userOptions(booklistConnection, userId);
                 break;
             }
@@ -132,6 +130,7 @@ public class Books {
             }
         }
     }
+
     // checks, if book already exists
     public static boolean checkBookExist(Connection booklistConnection, int userId) {
         try {
@@ -153,6 +152,7 @@ public class Books {
         }
         return false;
     }
+
     // this method inserts a new book in the DB
     public static void insertIntoBooks(Connection booklistConnection, int userId) {
         try {
@@ -173,6 +173,7 @@ public class Books {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while inserting book.", e);
         }
     }
+
     // this method deletes a book from the DB
     public static void deleteBook(Connection booklistConnection, int userId) {
         try {
@@ -213,12 +214,11 @@ public class Books {
             booklistLogger.log(Level.SEVERE, "SQL Exception occurred, while deleting a book.", e);
         }
     }
+
     public static void main(String[] args) {
         try {
             // connection to database
-            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist",
-                    "root",
-                    "Tzz$dJG+YccV^HQs");
+            Connection booklistConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3307/booklist", "root", "Tzz$dJG+YccV^HQs");
             // closing of resources
             booklistConnection.close();
             userInput.close();
